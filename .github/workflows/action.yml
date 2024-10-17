@@ -24,5 +24,7 @@ jobs:
       - name: Setup Gradle 🦕
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Build with Gradle 🔨
-        run: ./FeedApp/gradlew build
+      - name: Build with Gradle
+        # Make sure Gradle is run in the FeedApp directory
+        working-directory: ./FeedApp
+        run: ./gradlew build
