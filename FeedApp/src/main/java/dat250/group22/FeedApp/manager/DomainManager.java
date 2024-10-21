@@ -67,6 +67,30 @@ public class DomainManager {
     }
 
 
+    // User methods
+    public Collection<User> getUsers(){
+        return users.values();
+    }
+
+    public User getUser(UUID userId){
+        return users.get(userId);
+    }
+
+    public void addUser(User user){
+        users.put(user.getId(), user);
+    }
+
+    public void deleteUser(UUID userId){
+        users.remove(userId);
+    }
+
+    public void updateUser(UUID userId, User user){
+        logger.info("Updating user: " + user.getName());
+        users.put(userId, user);
+    }
+
+
+
     // Poll methods
     public Collection<Poll> getAllPolls() {
         return polls.values();
@@ -94,4 +118,5 @@ public class DomainManager {
         // Removes all votes associated with this poll
         votes.values().removeIf(vote -> (vote.getPollId()).equals(pollId));
     }
+
 }
