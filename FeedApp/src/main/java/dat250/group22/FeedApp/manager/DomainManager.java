@@ -66,4 +66,32 @@ public class DomainManager {
         }
     }
 
+
+    // Poll methods
+    public Collection<Poll> getAllPolls() {
+        return polls.values();
+    }
+
+    public void addPoll(Poll poll) {
+        polls.put(poll.getId(),poll);
+    }
+
+    public Poll getPoll(UUID pollId) {
+        return polls.get(pollId);
+    }
+
+    public void updatePoll(UUID pollId, Poll poll) {
+        polls.put(pollId, poll);
+    }
+
+    public void removeAllPolls() {
+        polls.clear();
+    }
+
+    public void removePoll(UUID pollId) {
+        polls.remove(pollId);
+
+        // Removes all votes associated with this poll
+        votes.values().removeIf(vote -> (vote.getPollId()).equals(pollId));
+    }
 }
