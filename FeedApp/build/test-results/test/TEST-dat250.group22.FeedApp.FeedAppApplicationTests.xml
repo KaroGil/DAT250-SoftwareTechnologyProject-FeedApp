@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="dat250.group22.FeedApp.FeedAppApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-21T07:14:31" hostname="MAMPENDAPC" time="2.59">
+  <properties/>
+  <testcase name="contextLoads()" classname="dat250.group22.FeedApp.FeedAppApplicationTests" time="2.59"/>
+  <system-out><![CDATA[09:14:25.124 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [dat250.group22.FeedApp.FeedAppApplicationTests]: FeedAppApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:14:25.485 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration dat250.group22.FeedApp.FeedAppApplication for test class dat250.group22.FeedApp.FeedAppApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2024-10-21T09:14:27.058+02:00  INFO 6740 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Starting FeedAppApplicationTests using Java 21.0.4 with PID 6740 (started by amali in C:\Users\amali\VSCodeProjects\DAT250\DAT250-SoftwareTechnologyProject-FeedApp\FeedApp)
+2024-10-21T09:14:27.061+02:00  INFO 6740 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2024-10-21T09:14:30.968+02:00  INFO 6740 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Started FeedAppApplicationTests in 4.804 seconds (process running for 9.007)
+]]></system-out>
+  <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\amali\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>
