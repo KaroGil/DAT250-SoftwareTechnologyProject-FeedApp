@@ -4,6 +4,8 @@ import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -27,8 +29,13 @@ public class UserController {
     }
 
     @PostMapping
-    public void createUser(@RequestBody User user){
-        manager.addUser(user);
+    public ResponseEntity<String> createUser(@RequestBody User user){
+        try {
+            manager.addUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (IllegalArgumentException e){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{userId}")

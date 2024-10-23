@@ -33,9 +33,15 @@ public class VoteController {
     }
 
     @PostMapping
-    public void createVote(@RequestBody Vote vote) {
-        Vote newVote = new Vote(vote.getVotedBy(), vote.getVoteOptionId(), vote.getPollId());
-        manager.addVote(newVote);
+    public void createOrUpdateVote(@RequestBody Vote vote) {
+        Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPollId());
+        if (existingVote != null){
+            existingVote.setVoteOptionId(vote.getVoteOptionId());
+            manager.updateVote(existingVote.getId(), existingVote);
+        }else {
+            Vote newVote = new Vote(vote.getVotedBy(), vote.getVoteOptionId(), vote.getPollId());
+            manager.addVote(newVote);
+        }
     }
 
     @DeleteMapping("/{voteId}")

@@ -66,6 +66,16 @@ public class DomainManager {
         }
     }
 
+    public Vote findVoteByUserAndPoll (UUID votedBy, UUID pollId){
+        logger.info("Finding vote by user: " + votedBy + " and poll: " + pollId);
+        for (Vote vote : votes.values()){
+            if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollId)){
+                return vote;
+            }
+        }
+        return null;
+    }
+
 
     // User methods
     public Collection<User> getUsers(){
@@ -77,7 +87,13 @@ public class DomainManager {
     }
 
     public void addUser(User user){
+        for (User existingUser : users.values()){
+            if (existingUser.getEmail().equals(user.getEmail())){
+                throw new IllegalArgumentException("Email already in use: " + user.getEmail());
+            }
+        }
         users.put(user.getId(), user);
+        logger.info("User added: " + user.getEmail());
     }
 
     public void deleteUser(UUID userId){
