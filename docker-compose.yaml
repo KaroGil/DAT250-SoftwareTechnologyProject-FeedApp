@@ -1,0 +1,12 @@
+version: " 27.2.0"
+    services:
+      feedapp:
+        build: .
+        container_name: "feedapp_container"
+        ports:
+          - 8080:8080
+      mongodb:
+        image: mongo:latest
+        container_name: "mongodb_container"
+        ports:
+          - 27070:27017
