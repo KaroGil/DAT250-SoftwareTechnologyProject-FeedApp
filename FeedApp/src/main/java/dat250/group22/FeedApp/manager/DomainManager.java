@@ -66,6 +66,16 @@ public class DomainManager {
         }
     }
 
+    public Vote findVoteByUserAndPoll (UUID votedBy, UUID pollId){
+        logger.info("Finding vote by user: " + votedBy + " and poll: " + pollId);
+        for (Vote vote : votes.values()){
+            if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollId)){
+                return vote;
+            }
+        }
+        return null;
+    }
+
 
     // User methods
     public Collection<User> getUsers(){
