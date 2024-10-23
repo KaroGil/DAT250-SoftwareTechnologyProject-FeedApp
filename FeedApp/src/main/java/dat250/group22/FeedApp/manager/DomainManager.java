@@ -77,7 +77,13 @@ public class DomainManager {
     }
 
     public void addUser(User user){
+        for (User existingUser : users.values()){
+            if (existingUser.getEmail().equals(user.getEmail())){
+                throw new IllegalArgumentException("Email already in use: " + user.getEmail());
+            }
+        }
         users.put(user.getId(), user);
+        logger.info("User added: " + user.getEmail());
     }
 
     public void deleteUser(UUID userId){
