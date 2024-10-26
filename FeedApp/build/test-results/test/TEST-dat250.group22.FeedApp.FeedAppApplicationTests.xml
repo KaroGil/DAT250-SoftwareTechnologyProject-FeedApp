@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dat250.group22.FeedApp.FeedAppApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-26T14:37:49" hostname="MAMPENDAPC" time="1.457">
+<testsuite name="dat250.group22.FeedApp.FeedAppApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-26T14:56:57" hostname="MAMPENDAPC" time="1.277">
   <properties/>
-  <testcase name="contextLoads()" classname="dat250.group22.FeedApp.FeedAppApplicationTests" time="1.457"/>
-  <system-out><![CDATA[16:37:38.256 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [dat250.group22.FeedApp.FeedAppApplicationTests]: FeedAppApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-16:37:38.532 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration dat250.group22.FeedApp.FeedAppApplication for test class dat250.group22.FeedApp.FeedAppApplicationTests
+  <testcase name="contextLoads()" classname="dat250.group22.FeedApp.FeedAppApplicationTests" time="1.277"/>
+  <system-out><![CDATA[16:56:46.113 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [dat250.group22.FeedApp.FeedAppApplicationTests]: FeedAppApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:56:46.374 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration dat250.group22.FeedApp.FeedAppApplication for test class dat250.group22.FeedApp.FeedAppApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,32 +14,32 @@
 
  :: Spring Boot ::                (v3.3.4)
 
-2024-10-26T16:37:40.039+02:00  INFO 2940 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Starting FeedAppApplicationTests using Java 21.0.5 with PID 2940 (started by amali in C:\Users\amali\IdeaProjects\DAT250\DAT250-SoftwareTechnologyProject-FeedApp\FeedApp)
-2024-10-26T16:37:40.043+02:00  INFO 2940 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : No active profile set, falling back to 1 default profile: "default"
-2024-10-26T16:37:41.919+02:00  INFO 2940 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-10-26T16:37:41.978+02:00  INFO 2940 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 0 JPA repository interfaces.
-2024-10-26T16:37:43.218+02:00  INFO 2940 --- [FeedApp] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-10-26T16:37:43.428+02:00  INFO 2940 --- [FeedApp] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-10-26T16:37:43.527+02:00  INFO 2940 --- [FeedApp] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-10-26T16:37:44.551+02:00  INFO 2940 --- [FeedApp] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-10-26T16:37:44.662+02:00  INFO 2940 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-10-26T16:37:45.227+02:00  INFO 2940 --- [FeedApp] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:fullstack_db user=ADMIN
-2024-10-26T16:37:45.233+02:00  INFO 2940 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-10-26T16:37:45.341+02:00  WARN 2940 --- [FeedApp] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-10-26T16:37:48.106+02:00  INFO 2940 --- [FeedApp] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-10-26T16:37:48.240+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table poll (id uuid not null, creator_userid uuid, published_at timestamp(6) with time zone, question varchar(255), state boolean not null, valid_until timestamp(6) with time zone, primary key (id))
-2024-10-26T16:37:48.254+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table poll_options (poll_id uuid not null, options_id uuid not null, primary key (poll_id, options_id))
-2024-10-26T16:37:48.256+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table user_entity (id uuid not null, email varchar(255), password varchar(255), username varchar(255), primary key (id))
-2024-10-26T16:37:48.258+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table vote (id uuid not null, poll_id uuid, publish_at timestamp(6) with time zone, vote_option_id uuid, voted_by uuid, primary key (id))
-2024-10-26T16:37:48.260+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table vote_option (id uuid not null, option varchar(255), presentation_order integer not null, primary key (id))
-2024-10-26T16:37:48.264+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options drop constraint if exists UKk0lss03xuy4cxngqecpp55owa
-2024-10-26T16:37:48.265+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options add constraint UKk0lss03xuy4cxngqecpp55owa unique (options_id)
-2024-10-26T16:37:48.268+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options add constraint FKhmge9j2ctbgbctbl9u1qjsd20 foreign key (options_id) references vote_option
-2024-10-26T16:37:48.277+02:00 DEBUG 2940 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options add constraint FKqfya5fg6lfp4ux4o75g5yuptv foreign key (poll_id) references poll
-2024-10-26T16:37:48.284+02:00  INFO 2940 --- [FeedApp] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-10-26T16:37:48.729+02:00  WARN 2940 --- [FeedApp] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-10-26T16:37:49.718+02:00  INFO 2940 --- [FeedApp] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:fullstack_db'
-2024-10-26T16:37:49.880+02:00  INFO 2940 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Started FeedAppApplicationTests in 10.637 seconds (process running for 13.922)
+2024-10-26T16:56:47.760+02:00  INFO 5644 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Starting FeedAppApplicationTests using Java 21.0.5 with PID 5644 (started by amali in C:\Users\amali\IdeaProjects\DAT250\DAT250-SoftwareTechnologyProject-FeedApp\FeedApp)
+2024-10-26T16:56:47.763+02:00  INFO 5644 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2024-10-26T16:56:49.603+02:00  INFO 5644 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-26T16:56:49.691+02:00  INFO 5644 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 49 ms. Found 0 JPA repository interfaces.
+2024-10-26T16:56:51.051+02:00  INFO 5644 --- [FeedApp] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-26T16:56:51.267+02:00  INFO 5644 --- [FeedApp] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-26T16:56:51.372+02:00  INFO 5644 --- [FeedApp] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-26T16:56:52.261+02:00  INFO 5644 --- [FeedApp] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-26T16:56:52.343+02:00  INFO 5644 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-26T16:56:52.750+02:00  INFO 5644 --- [FeedApp] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:fullstack_db user=ADMIN
+2024-10-26T16:56:52.756+02:00  INFO 5644 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-26T16:56:52.841+02:00  WARN 5644 --- [FeedApp] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-26T16:56:55.181+02:00  INFO 5644 --- [FeedApp] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-26T16:56:55.278+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table poll (id uuid not null, creator_userid uuid, published_at timestamp(6) with time zone, question varchar(255), state boolean not null, valid_until timestamp(6) with time zone, primary key (id))
+2024-10-26T16:56:55.291+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table poll_options (poll_id uuid not null, options_id uuid not null, primary key (poll_id, options_id))
+2024-10-26T16:56:55.293+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table user_entity (id uuid not null, email varchar(255), password varchar(255), username varchar(255), primary key (id))
+2024-10-26T16:56:55.295+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table vote (id uuid not null, poll_id uuid, publish_at timestamp(6) with time zone, vote_option_id uuid, voted_by uuid, primary key (id))
+2024-10-26T16:56:55.297+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : create table vote_option (id uuid not null, option varchar(255), presentation_order integer not null, primary key (id))
+2024-10-26T16:56:55.299+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options drop constraint if exists UKk0lss03xuy4cxngqecpp55owa
+2024-10-26T16:56:55.300+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options add constraint UKk0lss03xuy4cxngqecpp55owa unique (options_id)
+2024-10-26T16:56:55.303+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options add constraint FKhmge9j2ctbgbctbl9u1qjsd20 foreign key (options_id) references vote_option
+2024-10-26T16:56:55.313+02:00 DEBUG 5644 --- [FeedApp] [    Test worker] org.hibernate.SQL                        : alter table if exists poll_options add constraint FKqfya5fg6lfp4ux4o75g5yuptv foreign key (poll_id) references poll
+2024-10-26T16:56:55.319+02:00  INFO 5644 --- [FeedApp] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-26T16:56:55.746+02:00  WARN 5644 --- [FeedApp] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-26T16:56:56.794+02:00  INFO 5644 --- [FeedApp] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:fullstack_db'
+2024-10-26T16:56:56.955+02:00  INFO 5644 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Started FeedAppApplicationTests in 10.045 seconds (process running for 13.389)
 ]]></system-out>
   <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\amali\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
