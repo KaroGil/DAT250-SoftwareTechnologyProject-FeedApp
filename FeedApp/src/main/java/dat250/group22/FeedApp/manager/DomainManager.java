@@ -51,7 +51,6 @@ public class DomainManager {
     public void removeVote(UUID voteId) {
         votes.remove(voteId);
         logger.info("Deleted vote with id: {}", voteId);
-
     }
 
     public void updateVote(UUID voteId, Vote newVote) {

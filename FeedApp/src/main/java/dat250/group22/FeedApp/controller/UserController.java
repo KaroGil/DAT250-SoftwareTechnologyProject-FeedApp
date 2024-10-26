@@ -3,6 +3,8 @@ package dat250.group22.FeedApp.controller;
 
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.User;
+import dat250.group22.FeedApp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +17,19 @@ import java.util.UUID;
 public class UserController {
 
     private final DomainManager manager;
+    private final UserRepository userRepository;
 
-    public UserController(DomainManager manager) {
+    @Autowired
+    public UserController(DomainManager manager, UserRepository userRepository) {
         this.manager = manager;
+        this.userRepository = userRepository;
     }
 
     @PostMapping("/adduser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             manager.addUser(user);
+            userRepository.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

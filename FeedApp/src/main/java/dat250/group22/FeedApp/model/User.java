@@ -3,6 +3,7 @@ package dat250.group22.FeedApp.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 import java.util.UUID;
 
 @Entity
@@ -11,8 +12,9 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(columnDefinition = "uuid")
+    private UUID id = UUID.randomUUID();
 
     private String username;
     private String email;
