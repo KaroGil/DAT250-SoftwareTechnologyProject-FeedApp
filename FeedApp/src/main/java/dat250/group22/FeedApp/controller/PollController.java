@@ -1,11 +1,12 @@
 package dat250.group22.FeedApp.controller;
 
+
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.Poll;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collection;
 import java.util.UUID;
 
@@ -16,9 +17,8 @@ public class PollController {
 
     private final DomainManager manager;
 
-    public PollController(DomainManager manager){
-        this.manager = manager;
-    }
+    @Autowired
+    public PollController(DomainManager manager){ this.manager = manager; }
 
     @PostMapping("/addpoll")
     public ResponseEntity<String> createPoll(@RequestBody Poll poll) {
@@ -36,10 +36,10 @@ public class PollController {
     public Poll getPoll(@PathVariable UUID pollId) { return manager.getPoll(pollId); }
 
     @DeleteMapping("/delete/polls")
-    public void deleteAllPolls() { manager.removeAllPolls(); }
+    public void deleteAllPolls() { manager.deleteAllPolls(); }
 
     @DeleteMapping("/delete/{pollId}")
-    public void deletePoll(@PathVariable UUID pollId) { manager.removePoll(pollId); }
+    public void deletePoll(@PathVariable UUID pollId) { manager.deletePoll(pollId); }
 
     @PutMapping("/update/{pollId}")
     public void updatePoll(@PathVariable UUID pollId, @RequestBody Poll poll) { manager.updatePoll(pollId, poll); }

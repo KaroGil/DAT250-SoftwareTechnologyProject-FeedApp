@@ -25,4 +25,6 @@ public class Poll implements java.io.Serializable {
     @ElementCollection
     @CollectionTable(name = "poll_options", joinColumns = @JoinColumn(name = "poll_id"))
     private Set<VoteOption> options;
+
+    public boolean getState() { return state; }
 }

@@ -17,19 +17,14 @@ import java.util.UUID;
 public class UserController {
 
     private final DomainManager manager;
-    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(DomainManager manager, UserRepository userRepository) {
-        this.manager = manager;
-        this.userRepository = userRepository;
-    }
+    public UserController(DomainManager manager) { this.manager = manager; }
 
     @PostMapping("/adduser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             manager.addUser(user);
-            userRepository.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
