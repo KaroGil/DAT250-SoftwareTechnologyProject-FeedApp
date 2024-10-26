@@ -17,40 +17,40 @@ public class UserController {
     private final DomainManager manager;
     private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
 
-    public UserController (DomainManager manager){
+    public UserController(DomainManager manager) {
         this.manager = manager;
     }
 
-    @GetMapping
-    public Collection<User> getUsers(){
-        logger.info("getting users");
+    @GetMapping()
+    public Collection<User> getUsers() {
+        logger.info("Getting users...");
         return manager.getUsers();
     }
 
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody User user){
+    public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             manager.addUser(user);
             return ResponseEntity.status(HttpStatus.CREATED).build();
-        } catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
         }
     }
 
     @GetMapping("/get/{userId}")
-    public User getUser(@PathVariable Long userId){
+    public User getUser(@PathVariable Long userId) {
         return manager.getUser(userId);
     }
 
     @DeleteMapping("/delete/{userId}")
-    public void deleteUser(@PathVariable Long userId){
+    public void deleteUser(@PathVariable Long userId) {
         manager.deleteUser(userId);
     }
 
     @PutMapping("/update/{userId}")
-    public void updateUser(@PathVariable Long userId, @RequestBody User newUser){
-        logger.info("updating user");
+    public void updateUser(@PathVariable Long userId, @RequestBody User newUser) {
+        logger.info("Updating user...");
         manager.updateUser(userId, newUser);
-        logger.info("user updated");
+        logger.info("User with id: {} updated.", userId);
     }
 }

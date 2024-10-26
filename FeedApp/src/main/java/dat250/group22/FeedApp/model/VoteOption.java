@@ -1,35 +1,18 @@
 package dat250.group22.FeedApp.model;
-import java.util.UUID;
 
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "voteoption")
 public class VoteOption  implements java.io.Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String caption;
     private int presentationOrder;
-    private UUID id;
-
-    public VoteOption(String caption, int presentationOrder) {
-        this.id = UUID.randomUUID();
-        this.caption = caption;
-        this.presentationOrder = presentationOrder;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getCaption() {
-        return caption;
-    }
-
-    public void setCaption(String caption) {
-        this.caption = caption;
-    }
-
-    public int getPresentationOrder() {
-        return presentationOrder;
-    }
-
-    public void setPresentationOrder(int presentationOrder) {
-        this.presentationOrder = presentationOrder;
-    }
-
 }

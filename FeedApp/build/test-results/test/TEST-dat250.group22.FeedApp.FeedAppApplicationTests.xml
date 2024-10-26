@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dat250.group22.FeedApp.FeedAppApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-26T12:04:28" hostname="MAMPENDAPC" time="1.558">
+<testsuite name="dat250.group22.FeedApp.FeedAppApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-26T12:47:35" hostname="MAMPENDAPC" time="1.281">
   <properties/>
-  <testcase name="contextLoads()" classname="dat250.group22.FeedApp.FeedAppApplicationTests" time="1.558"/>
-  <system-out><![CDATA[14:04:16.013 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [dat250.group22.FeedApp.FeedAppApplicationTests]: FeedAppApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-14:04:16.320 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration dat250.group22.FeedApp.FeedAppApplication for test class dat250.group22.FeedApp.FeedAppApplicationTests
+  <testcase name="contextLoads()" classname="dat250.group22.FeedApp.FeedAppApplicationTests" time="1.281"/>
+  <system-out><![CDATA[14:47:22.670 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [dat250.group22.FeedApp.FeedAppApplicationTests]: FeedAppApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+14:47:23.021 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration dat250.group22.FeedApp.FeedAppApplication for test class dat250.group22.FeedApp.FeedAppApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -14,23 +14,24 @@
 
  :: Spring Boot ::                (v3.3.4)
 
-2024-10-26T14:04:17.786+02:00  INFO 8220 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Starting FeedAppApplicationTests using Java 21.0.5 with PID 8220 (started by amali in C:\Users\amali\IdeaProjects\DAT250\DAT250-SoftwareTechnologyProject-FeedApp\FeedApp)
-2024-10-26T14:04:17.791+02:00  INFO 8220 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : No active profile set, falling back to 1 default profile: "default"
-2024-10-26T14:04:19.959+02:00  INFO 8220 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-10-26T14:04:20.043+02:00  INFO 8220 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 53 ms. Found 0 JPA repository interfaces.
-2024-10-26T14:04:21.620+02:00  INFO 8220 --- [FeedApp] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-10-26T14:04:21.974+02:00  INFO 8220 --- [FeedApp] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
-2024-10-26T14:04:22.096+02:00  INFO 8220 --- [FeedApp] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-10-26T14:04:23.206+02:00  INFO 8220 --- [FeedApp] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-10-26T14:04:23.328+02:00  INFO 8220 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-10-26T14:04:23.986+02:00  INFO 8220 --- [FeedApp] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./fullstack_db user=ADMIN
-2024-10-26T14:04:23.993+02:00  INFO 8220 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-10-26T14:04:24.094+02:00  WARN 8220 --- [FeedApp] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2024-10-26T14:04:26.515+02:00  INFO 8220 --- [FeedApp] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2024-10-26T14:04:26.526+02:00  INFO 8220 --- [FeedApp] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-10-26T14:04:27.094+02:00  WARN 8220 --- [FeedApp] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-10-26T14:04:28.334+02:00  INFO 8220 --- [FeedApp] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./fullstack_db'
-2024-10-26T14:04:28.529+02:00  INFO 8220 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Started FeedAppApplicationTests in 11.581 seconds (process running for 15.554)
+2024-10-26T14:47:24.492+02:00  INFO 9900 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Starting FeedAppApplicationTests using Java 21.0.5 with PID 9900 (started by amali in C:\Users\amali\IdeaProjects\DAT250\DAT250-SoftwareTechnologyProject-FeedApp\FeedApp)
+2024-10-26T14:47:24.496+02:00  INFO 9900 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : No active profile set, falling back to 1 default profile: "default"
+2024-10-26T14:47:26.724+02:00  INFO 9900 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-10-26T14:47:26.810+02:00  INFO 9900 --- [FeedApp] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 51 ms. Found 0 JPA repository interfaces.
+2024-10-26T14:47:28.228+02:00  INFO 9900 --- [FeedApp] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-10-26T14:47:28.499+02:00  INFO 9900 --- [FeedApp] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2024-10-26T14:47:28.638+02:00  INFO 9900 --- [FeedApp] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-10-26T14:47:29.756+02:00  INFO 9900 --- [FeedApp] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-10-26T14:47:29.866+02:00  INFO 9900 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-10-26T14:47:30.505+02:00  INFO 9900 --- [FeedApp] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./fullstack_db user=ADMIN
+2024-10-26T14:47:30.510+02:00  INFO 9900 --- [FeedApp] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-10-26T14:47:30.596+02:00  WARN 9900 --- [FeedApp] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-10-26T14:47:32.904+02:00  INFO 9900 --- [FeedApp] [    Test worker] o.h.m.i.EntityInstantiatorPojoStandard   : HHH000182: No default (no-argument) constructor for class: dat250.group22.FeedApp.model.Vote (class must be instantiated by Interceptor)
+2024-10-26T14:47:33.553+02:00  INFO 9900 --- [FeedApp] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-10-26T14:47:33.564+02:00  INFO 9900 --- [FeedApp] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-10-26T14:47:34.028+02:00  WARN 9900 --- [FeedApp] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-10-26T14:47:35.015+02:00  INFO 9900 --- [FeedApp] [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./fullstack_db'
+2024-10-26T14:47:35.177+02:00  INFO 9900 --- [FeedApp] [    Test worker] d.g.FeedApp.FeedAppApplicationTests      : Started FeedAppApplicationTests in 11.568 seconds (process running for 15.378)
 ]]></system-out>
   <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\amali\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.14.19\154da3a65b4f4a909d3e5bdec55d1b2b4cbb6ce1\byte-buddy-agent-1.14.19.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning

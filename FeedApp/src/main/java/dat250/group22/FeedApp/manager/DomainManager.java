@@ -18,10 +18,10 @@ public class DomainManager {
     private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
 
     // HashMaps to store the data
-    HashMap<UUID, Poll> polls = new HashMap<>();
+    HashMap<Long, Poll> polls = new HashMap<>();
     HashMap<Long, User> users = new HashMap<>();
-    HashMap<UUID, Vote> votes = new HashMap<>();
-    HashMap<UUID, VoteOption> voteOptions = new HashMap<>();
+    HashMap<Long, Vote> votes = new HashMap<>();
+    HashMap<Long, VoteOption> voteOptions = new HashMap<>();
 
     // Vote methods 
     public void addVote(Vote vote) {
@@ -30,12 +30,12 @@ public class DomainManager {
     }
 
     public Collection<Vote> getAllVotes() {
-        logger.info("Getting all votes");
+        logger.info("Getting all votes...");
         return  votes.values();
     }
 
-    public Vote getVote(UUID voteId) {
-        logger.info("Getting vote: {}", voteId);
+    public Vote getVote(Long voteId) {
+        logger.info("Getting vote with id: {}", voteId);
         return votes.get(voteId);
     }
 
@@ -43,16 +43,16 @@ public class DomainManager {
         votes.clear();
     }
 
-    public void removeVote(UUID voteId) {
-        logger.info("Removing vote: {}", voteId);
+    public void removeVote(Long voteId) {
+        logger.info("Removing vote with id: {}", voteId);
         votes.remove(voteId);
     }
 
-    public void updateVote(UUID voteId, Vote newVote) {
-        logger.info("Updating vote: {} with {}", voteId, newVote);
+    public void updateVote(Long voteId, Vote newVote) {
+        logger.info("Updating vote with id: {} with new vote with id: {}", voteId, newVote);
         Vote existingVote = votes.get(voteId);
         if (existingVote != null) {
-            logger.info("Updating vote: {} with new voteOptionId: {}", voteId, newVote.getVoteOptionId());
+            logger.info("Updating vote: {} with new vote with voteOptionId: {}", voteId, newVote.getVoteOptionId());
     
             // Only update the voteOptionId, keep the other fields unchanged
             existingVote.setVoteOptionId(newVote.getVoteOptionId());
@@ -65,8 +65,8 @@ public class DomainManager {
         }
     }
 
-    public Vote findVoteByUserAndPoll (UUID votedBy, UUID pollId){
-        logger.info("Finding vote by user: {} and poll: {}", votedBy, pollId);
+    public Vote findVoteByUserAndPoll (Long votedBy, Long pollId){
+        logger.info("Finding vote by user id: {} and poll id: {}", votedBy, pollId);
         for (Vote vote : votes.values()){
             if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollId)){
                 return vote;
@@ -103,9 +103,8 @@ public class DomainManager {
     }
 
 
-
     // Poll methods
-    public Collection<Poll> getAllPolls() {
+    public Collection<Poll> getPolls() {
         return polls.values();
     }
 
@@ -113,11 +112,11 @@ public class DomainManager {
         polls.put(poll.getId(),poll);
     }
 
-    public Poll getPoll(UUID pollId) {
+    public Poll getPoll(Long pollId) {
         return polls.get(pollId);
     }
 
-    public void updatePoll(UUID pollId, Poll poll) {
+    public void updatePoll(Long pollId, Poll poll) {
         polls.put(pollId, poll);
     }
 
@@ -125,11 +124,10 @@ public class DomainManager {
         polls.clear();
     }
 
-    public void removePoll(UUID pollId) {
+    public void removePoll(Long pollId) {
         polls.remove(pollId);
 
         // Removes all votes associated with this poll
         votes.values().removeIf(vote -> (vote.getPollId()).equals(pollId));
     }
-
 }
