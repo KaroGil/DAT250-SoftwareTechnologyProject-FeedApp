@@ -4,6 +4,7 @@ package dat250.group22.FeedApp.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -11,15 +12,15 @@ import java.time.Instant;
 public class Vote implements java.io.Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    private Long votedBy;
-    private Long pollId;
-    private Long voteOptionId;
+    private UUID votedBy;
+    private UUID pollId;
+    private UUID voteOptionId;
     private Instant publishAt;
 
-    public Vote(Long votedBy, Long voteOptionId, Long pollId) {
+    public Vote(UUID votedBy, UUID voteOptionId, UUID pollId) {
         this.votedBy = votedBy;
          this.voteOptionId = voteOptionId;
          this.pollId = pollId;

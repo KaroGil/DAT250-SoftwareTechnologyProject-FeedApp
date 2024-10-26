@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -12,20 +13,16 @@ import java.util.ArrayList;
 public class Poll implements java.io.Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    private Long creatorUserID;
+    private UUID creatorUserID;
     private String question;
     private Instant publishedAt;
     private Instant validUntil;
     private boolean state;
 
     @ElementCollection
-    private ArrayList<VoteOption> options;
-
-
-    public boolean getState() {
-        return state;
-    }
+    @CollectionTable(name = "poll_options", joinColumns = @JoinColumn(name = "poll_id"))
+    private Set<VoteOption> options;
 }
