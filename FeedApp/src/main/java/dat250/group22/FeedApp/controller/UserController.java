@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -38,18 +37,18 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userId}")
-    public User getUser(@PathVariable UUID userId){
+    @GetMapping("/get/{userId}")
+    public User getUser(@PathVariable Long userId){
         return manager.getUser(userId);
     }
 
-    @DeleteMapping("/userId")
-    public void deleteUser(@PathVariable UUID userId){
+    @DeleteMapping("/delete/{userId}")
+    public void deleteUser(@PathVariable Long userId){
         manager.deleteUser(userId);
     }
 
-    @PutMapping("/userId")
-    public void updateUser(@PathVariable UUID userId, @RequestBody User newUser){
+    @PutMapping("/update/{userId}")
+    public void updateUser(@PathVariable Long userId, @RequestBody User newUser){
         logger.info("updating user");
         manager.updateUser(userId, newUser);
         logger.info("user updated");

@@ -18,15 +18,14 @@ public class DomainManager {
     private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
 
     // HashMaps to store the data
-    HashMap<UUID, Poll> polls = new HashMap<UUID, Poll>();
-    HashMap<UUID, User> users = new HashMap<UUID, User>();
-    HashMap<UUID, Vote> votes = new HashMap<UUID, Vote>();
-    HashMap<UUID, VoteOption> voteOptions = new HashMap<UUID, VoteOption>();
-
+    HashMap<UUID, Poll> polls = new HashMap<>();
+    HashMap<Long, User> users = new HashMap<>();
+    HashMap<UUID, Vote> votes = new HashMap<>();
+    HashMap<UUID, VoteOption> voteOptions = new HashMap<>();
 
     // Vote methods 
     public void addVote(Vote vote) {
-        logger.info("Adding vote: " + vote);
+        logger.info("Adding vote: {}", vote);
         votes.put(vote.getId(), vote);
     }
 
@@ -36,7 +35,7 @@ public class DomainManager {
     }
 
     public Vote getVote(UUID voteId) {
-        logger.info("Getting vote: " + voteId);
+        logger.info("Getting vote: {}", voteId);
         return votes.get(voteId);
     }
 
@@ -45,15 +44,15 @@ public class DomainManager {
     }
 
     public void removeVote(UUID voteId) {
-        logger.info("Removing vote: " + voteId);
+        logger.info("Removing vote: {}", voteId);
         votes.remove(voteId);
     }
 
     public void updateVote(UUID voteId, Vote newVote) {
-        logger.info("Updating vote: " + voteId + " with " + newVote);
+        logger.info("Updating vote: {} with {}", voteId, newVote);
         Vote existingVote = votes.get(voteId);
         if (existingVote != null) {
-            logger.info("Updating vote: " + voteId + " with new voteOptionId: " + newVote.getVoteOptionId());
+            logger.info("Updating vote: {} with new voteOptionId: {}", voteId, newVote.getVoteOptionId());
     
             // Only update the voteOptionId, keep the other fields unchanged
             existingVote.setVoteOptionId(newVote.getVoteOptionId());
@@ -61,13 +60,13 @@ public class DomainManager {
             // Save the updated vote
             votes.put(voteId, existingVote);
         } else {
-            logger.info("Vote not found: " + voteId);
+            logger.info("Vote not found: {}", voteId);
             throw new IllegalArgumentException("Vote not found with id: " + voteId);
         }
     }
 
     public Vote findVoteByUserAndPoll (UUID votedBy, UUID pollId){
-        logger.info("Finding vote by user: " + votedBy + " and poll: " + pollId);
+        logger.info("Finding vote by user: {} and poll: {}", votedBy, pollId);
         for (Vote vote : votes.values()){
             if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollId)){
                 return vote;
@@ -82,9 +81,7 @@ public class DomainManager {
         return users.values();
     }
 
-    public User getUser(UUID userId){
-        return users.get(userId);
-    }
+    public User getUser(Long userId){ return users.get(userId); }
 
     public void addUser(User user){
         for (User existingUser : users.values()){
@@ -93,15 +90,15 @@ public class DomainManager {
             }
         }
         users.put(user.getId(), user);
-        logger.info("User added: " + user.getEmail());
+        logger.info("User added: {}", user.getEmail());
     }
 
-    public void deleteUser(UUID userId){
+    public void deleteUser(Long userId){
         users.remove(userId);
     }
 
-    public void updateUser(UUID userId, User user){
-        logger.info("Updating user: " + user.getName());
+    public void updateUser(Long userId, User user){
+        logger.info("Updating user: {}", user.getUsername());
         users.put(userId, user);
     }
 

@@ -1,46 +1,20 @@
 package dat250.group22.FeedApp.model;
 
-import java.util.UUID;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.*;
 
+@Entity
+@Data
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String username;
     private String email;
     private String password;
-    private UUID id;
-
-    public User (String username, String email, String password){
-        this.id = UUID.randomUUID();
-        this.username = username;
-        this.email = email;
-        this.password = password;
-    }
-
-   public UUID getId(){
-        return id;
-   }
-
-   public String getName(){
-        return username;
-   }
-
-   public void setName(String newName){
-        this.username = newName;
-   }
-
-   public String getEmail(){
-        return email;
-   }
-
-   public void setEmail(String newEmail){
-        this.email = newEmail;
-   }
-
-   public String getPassword(){
-        return password;
-   }
-
-   public void setPassword (String password){
-        this.password = password;
-   }
 }
