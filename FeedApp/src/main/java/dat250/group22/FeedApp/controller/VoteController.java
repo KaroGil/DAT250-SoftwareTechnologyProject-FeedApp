@@ -3,6 +3,7 @@ package dat250.group22.FeedApp.controller;
 
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.Vote;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class VoteController {
 
     private final DomainManager manager;
 
+    @Autowired
     public VoteController(DomainManager manager) { this.manager = manager; }
 
     @PostMapping("/addvote")
