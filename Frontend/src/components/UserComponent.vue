@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // Get users
+import {ref} from 'vue'
 import { defaultFetch } from '@/components/defaultFetch'
 
 interface User {
@@ -8,16 +9,20 @@ interface User {
   email: string;
 }
 
-let users: User[] = [];
+const users = ref<User[]>([]);
+const loading = ref(true);
 
 // Fetch all users
 async function fetchUsers() {
   try {
     const response = await defaultFetch("/users", "GET");
-    users = await response;
+    users.value = await response;
+    console.log("users: ", users)
   } catch (error) {
     console.error('Error:', error);
     alert('An error occurred. Please try again.');
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -25,7 +30,7 @@ async function fetchUsers() {
 async function deleteUser(id: number) {
   try {
     await defaultFetch(`/users/${id}`, "DELETE");
-    users = users.filter(user => user.id !== id);
+    users.value = users.value.filter(user => user.id !== id);
   } catch (error) {
     console.error('Error:', error);
     alert('An error occurred. Please try again.');
@@ -34,6 +39,7 @@ async function deleteUser(id: number) {
 
 // Call the fetchUsers function when the component is mounted
 fetchUsers();
+
 </script>
 
 <template>
@@ -42,9 +48,10 @@ fetchUsers();
       <!-- Poll creation form -->
       <div class="modal">
         <h2>All users</h2>
-        <ul v-for="user in users" :key="user.id">
+        <p v-if="loading">Loading users...</p>
+        <ul v-else v-for="user in users" :key="user.id">
           <li>
-            {user.name} ({user.email})
+            {{ user.name }} ({{ user.email }})
             <button @click="deleteUser(user.id)">Delete</button>
           </li>
         </ul>

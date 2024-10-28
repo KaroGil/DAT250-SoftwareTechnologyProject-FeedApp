@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -46,5 +47,23 @@ public class UserController {
         logger.info("updating user");
         manager.updateUser(userId, newUser);
         logger.info("user updated");
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestBody User user) {
+        if(user == null || user.getName() == null || user.getPassword() == null) {
+            logger.info("user/name/pass is null");
+            return null;
+        }
+        logger.info("user gotten for login: " + user.getName() + ", password: " + user.getPassword());
+        logger.info("logging in " + user.getName());
+        User userFound = manager.login(user.getName(), user.getPassword());
+        if(userFound == null) {
+            logger.info("user not found");
+            return null;
+        }
+        logger.info("user found: " + userFound.getName());
+
+        return userFound;
     }
 }

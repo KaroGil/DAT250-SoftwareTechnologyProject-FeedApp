@@ -8,6 +8,8 @@ lerna-debug.log*
 node_modules
 .DS_Store
 dist
+build/
+.gradle/
 dist-ssr
 coverage
 *.local
