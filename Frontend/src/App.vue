@@ -1,8 +1,13 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import PollComponent from "./components/PollComponent.vue";
+  import UserComponent from '@/components/UserComponent.vue'
+  import VoteComponent from '@/components/VoteComponent.vue'
 
-  const showPollForm = ref(false);
+  const currentView = ref('login'); // login as defualt to make sure the user logs in
+  const changeView = (view: string) =>{
+    currentView.value = view;
+  };
 </script>
 
 <template>
@@ -13,23 +18,17 @@
     </div>
   </header>
 
-  <main>
-    <button @click="change">
-      Login
-    </button>
-    <button @click="showPollForm = true">
-      Add Poll
-    </button>
-    <button @click="count++">
-      See Polls
-    </button>
-    <button @click="count++">
-      Vote
-    </button>
-    <button @click="count++">
-      See Users
-    </button>
+  <main class="navbar">
+    <button @click="changeView('login')"> Login </button>
+    <button @click="changeView('addPoll')"> Add Poll </button>
+    <button @click="changeView('seePoll')"> See Polls </button>
+    <button @click="changeView('vote')"> Vote </button>
+    <button @click="changeView('seeUsers')"> See Users </button>
   </main>
-  
-  <PollComponent v-if="showPollForm" :onCancel="handleCancel" />
+
+  <section>
+    <UserComponent v-if="currentView === 'seeUsers'" />
+    <PollComponent v-if="currentView === 'addPoll'" />
+    <VoteComponent v-if="currentView === 'vote'" />
+  </section>
 </template>
