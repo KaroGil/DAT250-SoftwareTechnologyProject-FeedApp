@@ -153,6 +153,15 @@ public class DomainManager {
         }
     }
 
+    public User login(String username, String password) {
+        for (User user : userRepository.findAll()) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 
 
     // Poll methods
