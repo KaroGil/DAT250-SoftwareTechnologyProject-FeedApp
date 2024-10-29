@@ -3,6 +3,8 @@ package dat250.group22.FeedApp.controller;
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.User;
 import dat250.group22.FeedApp.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import java.util.UUID;
 @CrossOrigin
 @RequestMapping("/api/users")
 public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
 
     private final DomainManager manager;
 
@@ -45,18 +48,18 @@ public class UserController {
 
     @PostMapping("/login")
     public User login(@RequestBody User user) {
-        if(user == null || user.getName() == null || user.getPassword() == null) {
+        if(user == null || user.getUsername() == null || user.getPassword() == null) {
             logger.info("user/name/pass is null");
             return null;
         }
-        logger.info("user gotten for login: " + user.getName() + ", password: " + user.getPassword());
-        logger.info("logging in " + user.getName());
-        User userFound = manager.login(user.getName(), user.getPassword());
+        logger.info("user gotten for login: " + user.getUsername() + ", password: " + user.getPassword());
+        logger.info("logging in " + user.getUsername());
+        User userFound = manager.login(user.getUsername(), user.getPassword());
         if(userFound == null) {
             logger.info("user not found");
             return null;
         }
-        logger.info("user found: " + userFound.getName());
+        logger.info("user found: " + userFound.getUsername());
 
         return userFound;
     }
