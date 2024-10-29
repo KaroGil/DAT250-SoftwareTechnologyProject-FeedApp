@@ -47,9 +47,9 @@ public class VoteController {
     @GetMapping
     public Collection<Vote> getVotes() { return manager.getVotes(); }
 
-    @DeleteMapping("/delete/{voteId}")
+    @DeleteMapping("/{voteId}")
     public void deleteVote(@PathVariable UUID voteId) { manager.removeVote(voteId); }
 
-    @PutMapping("/update/{voteId}")
+    @PutMapping("/{voteId}")
     public void updateVote(@PathVariable UUID voteId, @RequestBody Vote newVote) { manager.updateVote(voteId, newVote); }
 }

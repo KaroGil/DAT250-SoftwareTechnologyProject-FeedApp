@@ -205,7 +205,7 @@ public class DomainManager {
             current.setQuestion(newPoll.getQuestion() != null ? newPoll.getQuestion() : current.getQuestion());
             current.setPublishedAt(newPoll.getPublishedAt() != null ? newPoll.getPublishedAt() : current.getPublishedAt());
             current.setValidUntil(newPoll.getValidUntil() != null ? newPoll.getValidUntil() : current.getValidUntil());
-            current.setState(newPoll.getState());
+            current.setPublic(newPoll.isPublic());
 
             // Save the new poll
             Poll updatedPoll = pollRepository.save(current);

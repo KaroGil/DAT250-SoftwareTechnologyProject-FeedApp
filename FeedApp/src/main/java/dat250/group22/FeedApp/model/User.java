@@ -8,13 +8,12 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "user_entity")
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(columnDefinition = "uuid")
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String username;
     private String email;

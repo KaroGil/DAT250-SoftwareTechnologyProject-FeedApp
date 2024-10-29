@@ -20,6 +20,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.hibernate:hibernate-core:7.0.0.Alpha3")
 	implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
 	implementation("jakarta.transaction:jakarta.transaction-api")
 	annotationProcessor("org.projectlombok:lombok")

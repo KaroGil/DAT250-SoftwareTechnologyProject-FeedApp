@@ -20,7 +20,7 @@ public class PollController {
     @Autowired
     public PollController(DomainManager manager){ this.manager = manager; }
 
-    @PostMapping("/addpoll")
+    @PostMapping
     public ResponseEntity<String> createPoll(@RequestBody Poll poll) {
         try {
             manager.addPoll(poll);
@@ -32,15 +32,15 @@ public class PollController {
     @GetMapping
     public Collection<Poll> getPolls() { return manager.getPolls(); }
 
-    @GetMapping("/get/{pollId}")
+    @GetMapping("/{pollId}")
     public Poll getPoll(@PathVariable UUID pollId) { return manager.getPoll(pollId); }
 
-    @DeleteMapping("/delete/polls")
+    @DeleteMapping
     public void deleteAllPolls() { manager.deleteAllPolls(); }
 
-    @DeleteMapping("/delete/{pollId}")
+    @DeleteMapping("/{pollId}")
     public void deletePoll(@PathVariable UUID pollId) { manager.deletePoll(pollId); }
 
-    @PutMapping("/update/{pollId}")
+    @PutMapping("/{pollId}")
     public void updatePoll(@PathVariable UUID pollId, @RequestBody Poll poll) { manager.updatePoll(pollId, poll); }
 }

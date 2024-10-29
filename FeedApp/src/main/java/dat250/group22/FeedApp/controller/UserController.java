@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     public UserController(DomainManager manager) { this.manager = manager; }
 
-    @PostMapping("/adduser")
+    @PostMapping
     public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             manager.addUser(user);
@@ -31,15 +31,15 @@ public class UserController {
         }
     }
 
-    @GetMapping()
+    @GetMapping
     public Collection<User> getUsers() { return manager.getUsers(); }
 
-    @GetMapping("/get/{userId}")
+    @GetMapping("/{userId}")
     public User getUser(@PathVariable UUID userId) { return manager.getUser(userId); }
 
-    @DeleteMapping("/delete/{userId}")
+    @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable UUID userId) { manager.deleteUser(userId); }
 
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     public void updateUser(@PathVariable UUID userId, @RequestBody User newUser) { manager.updateUser(userId, newUser); }
 }

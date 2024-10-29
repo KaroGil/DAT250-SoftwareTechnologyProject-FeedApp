@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "vote_option")
+@Table(name = "voteoption")
 @Embeddable
 public class VoteOption  implements java.io.Serializable {
 
@@ -16,6 +16,6 @@ public class VoteOption  implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String option;
+    private String caption;
     private int presentationOrder;
 }

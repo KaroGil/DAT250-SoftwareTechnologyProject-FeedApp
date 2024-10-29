@@ -2,14 +2,14 @@ package dat250.group22.FeedApp.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "poll")
+@Table(name = "polls")
 public class Poll implements java.io.Serializable {
 
     @Id
@@ -20,11 +20,10 @@ public class Poll implements java.io.Serializable {
     private String question;
     private Instant publishedAt;
     private Instant validUntil;
-    private boolean state;
+    private boolean isPublic;
 
     @ElementCollection
     @CollectionTable(name = "poll_options", joinColumns = @JoinColumn(name = "poll_id"))
     private Set<VoteOption> options;
 
-    public boolean getState() { return state; }
 }
