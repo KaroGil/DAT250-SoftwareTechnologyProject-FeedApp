@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -18,4 +19,8 @@ public class User {
     private String username;
     private String email;
     private String password;
+
+//    @ElementCollection
+//    @CollectionTable(name = "created_polls", joinColumns = @JoinColumn(name = "user_polls"))
+//    private Set<VoteOption> polls;
 }
