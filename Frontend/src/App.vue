@@ -1,53 +1,57 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+  import { ref } from 'vue';
+  import PollComponent from "./components/PollComponent.vue";
+  import UserComponent from '@/components/UserComponent.vue';
+  import VoteComponent from '@/components/VoteComponent.vue';
+  import Login from '@/components/Login.vue';
+  import SeePolls from '@/components/SeePolls.vue'
+
+  const currentView = ref('login'); // login as defualt to make sure the user logs in
+  const changeView = (view: string) =>{
+    currentView.value = view;
+  };
 </script>
 
 <template>
   <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
+    <h1>Feed App</h1>
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <p>Best group ever == group22 == {names: [Kaja, Karolina, Mina, Mampenda]}</p>
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
+  <main class="navbar">
+    <button @click="changeView('login')"> Login </button>
+    <button @click="changeView('seePoll')"> See Polls </button>
+    <!--    Only visable if user logged in-->
+    <button @click="changeView('addPoll')"> Add Poll </button>
+    <button @click="changeView('vote')"> Vote </button>
+    <button @click="changeView('seeUsers')"> See Users </button>
   </main>
+
+  <section>
+    <Login v-if="currentView === 'login'" />
+    <SeePolls v-if="currentView === 'seePoll'" />
+    <!--    Only visable if user logged in-->
+    <UserComponent v-if="currentView === 'seeUsers'" />
+    <PollComponent v-if="currentView === 'addPoll'" />
+    <VoteComponent v-if="currentView === 'vote'" />
+  </section>
 </template>
 
+
 <style scoped>
-header {
-  line-height: 1.5;
+/* Make the navbar horizontal */
+.navbar {
+  display: flex;
+  gap: 1rem;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+button {
+  cursor: pointer;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>

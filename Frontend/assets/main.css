@@ -1,0 +1,64 @@
+/* App.css */
+
+/* Style for the whole page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Style for the header */
+header {
+    background-color: mediumpurple;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 2px -2px gray;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin: 0;
+}
+
+.wrapper {
+    margin-top: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper p {
+    font-size: 1.2em;
+    color: #333;
+}
+
+/* Style for main section buttons */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px;
+}
+
+button {
+    background-color: mediumpurple;
+    color: white;
+    padding: 12px 24px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: mediumpurple;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
