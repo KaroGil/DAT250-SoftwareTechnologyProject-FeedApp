@@ -3,8 +3,8 @@ export const defaultFetch = async (url: string, method: string, token?: string, 
   const response = await fetch("http://localhost:8080/api" + url, {
     method: method,
     headers: {
-      // TODO: Add token here (user auth)
       "Content-Type": "application/json",
+      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   });
