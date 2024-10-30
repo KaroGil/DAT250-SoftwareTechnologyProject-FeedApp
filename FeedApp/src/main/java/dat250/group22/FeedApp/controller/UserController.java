@@ -17,8 +17,8 @@ import java.util.UUID;
 @CrossOrigin
 @RequestMapping("/api/users")
 public class UserController {
-    private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
 
+    private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
     private final DomainManager manager;
 
     @Autowired

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.UUID;
+import java.time.Instant;
 
 @RestController
 @CrossOrigin
@@ -23,6 +24,7 @@ public class PollController {
     @PostMapping
     public ResponseEntity<String> createPoll(@RequestBody Poll poll) {
         try {
+            poll.setPublishedAt(Instant.now());
             manager.addPoll(poll);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (IllegalArgumentException e){

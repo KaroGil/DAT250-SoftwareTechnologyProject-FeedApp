@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
+
+import java.time.Instant;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import dat250.group22.FeedApp.repository.*;
@@ -28,10 +31,10 @@ public class DomainManager {
         this.voteRepository = voteRepository;
     }
 
-    // Vote methods 
+    // Vote methods
     public void addVote(Vote vote) {
-        voteRepository.save(vote);
         logger.info("Vote created: {}", vote);
+        voteRepository.save(vote);
     }
 
     public Collection<Vote> getVotes() {
@@ -84,20 +87,25 @@ public class DomainManager {
         }
     }
 
-    public Vote findVoteByUserAndPoll(UUID userID, UUID pollID) {
-        logger.info("Finding vote by user id {} and poll id {}", userID, pollID);
+    public Vote findVoteByUserAndPoll(UUID votedBy, UUID pollID) {
+        logger.info("Finding vote by user id {} and poll id {}", votedBy, pollID);
         for (Vote vote : voteRepository.findAll()) {
-            if (vote.getVotedBy().equals(userID) && vote.getVoteOptionId().equals(pollID)) {
+            if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollID)) {
                 return vote;
             }
         }
-        logger.warn("Vote with user id {} and poll id {} not found.", userID, pollID);
+        logger.warn("Vote with user id {} and poll id {} not found.", votedBy, pollID);
         return null;
     }
 
 
     // User methods
     public void addUser(User user) {
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser.isPresent()){
+            logger.warn("User with email {} already exists.", user.getEmail());
+            throw new RuntimeException("Email is already in use.");
+        }
         userRepository.save(user);
         logger.info("User created: {}", user);
     }
@@ -194,6 +202,12 @@ public class DomainManager {
 
     public void deletePoll(UUID pollID) {
         logger.info("Removing poll with id: {}", pollID);
+        List<Vote> votesToDelete = voteRepository.findByPollId(pollID);
+
+        if (!votesToDelete.isEmpty()){
+            voteRepository.deleteAll(votesToDelete);
+            logger.info("Removed {} votes associated with poll id: {}", votesToDelete.size(), pollID);
+        }
         pollRepository.deleteById(pollID);
         logger.info("Removed poll with id: {}", pollID);
     }
