@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,8 +23,9 @@ public class Poll implements java.io.Serializable {
     private Instant validUntil;
     private boolean isPublic;
 
-    @ElementCollection
-    @CollectionTable(name = "poll_options", joinColumns = @JoinColumn(name = "poll_id"))
-    private Set<VoteOption> options;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "poll_id")
+    private Set<VoteOption> options = new HashSet<>();
 
 }

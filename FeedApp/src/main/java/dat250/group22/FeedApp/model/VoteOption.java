@@ -8,8 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "voteoption")
-@Embeddable
+@Table(name = "voteoptions")
 public class VoteOption  implements java.io.Serializable {
 
     @Id

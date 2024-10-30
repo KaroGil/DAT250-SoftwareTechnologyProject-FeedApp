@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Instant;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -21,12 +23,13 @@ public class VoteController {
     @Autowired
     public VoteController(DomainManager manager) { this.manager = manager; }
 
-    @PostMapping("/addvote")
+    @PostMapping
     public ResponseEntity<String> createOrUpdateVote(@RequestBody Vote vote) {
         Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPollId());
 
         if (existingVote != null){
             try{
+                existingVote.setPublishAt(Instant.now());
                 existingVote.setVoteOptionId(vote.getVoteOptionId());
                 manager.updateVote(existingVote.getId(), existingVote);
                 return ResponseEntity.status(HttpStatus.OK).build();
@@ -36,6 +39,7 @@ public class VoteController {
         } else {
             try {
                 Vote newVote = new Vote(vote.getVotedBy(), vote.getVoteOptionId(), vote.getPollId());
+                newVote.setPublishAt(Instant.now());
                 manager.addVote(newVote);
                 return ResponseEntity.status(HttpStatus.CREATED).build();
             } catch (IllegalArgumentException e) {

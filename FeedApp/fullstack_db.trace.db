@@ -1973,3 +1973,6 @@ Caused by: java.lang.AssertionError: 49152 != 28672
 	at org.h2.mvstore.RandomAccessStore.writeChunk(RandomAccessStore.java:28)
 	at org.h2.mvstore.FileStore.storeBuffer(FileStore.java:1524)
 	... 6 more
+2024-10-30 10:53:53.205334+01:00 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "[*]from users select *"; SQL statement:
+from users select * [42000-224]
