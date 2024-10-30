@@ -23,6 +23,7 @@ dependencies {
 	implementation("org.hibernate:hibernate-core:7.0.0.Alpha3")
 	implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
 	implementation("jakarta.transaction:jakarta.transaction-api")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	annotationProcessor("org.projectlombok:lombok")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.h2database:h2")
