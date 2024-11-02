@@ -25,8 +25,9 @@ async function login() {
   } finally {
     loading.value = false;
     if (typeof window !== 'undefined') {
-      sessionStorage.setItem('user', JSON.stringify(users.value));
+      sessionStorage.setItem('userToken', JSON.stringify(users.value));
     }
+    location.reload();
   }
 }
 
