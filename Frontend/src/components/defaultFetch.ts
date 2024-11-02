@@ -4,10 +4,11 @@ export const defaultFetch = async (url: string, method: string, token?: string, 
     method: method,
     headers: {
       "Content-Type": "application/json",
-      'Authorization': `Bearer ${token}`,
+      // 'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   });
+  console.log(response)
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`);
   }

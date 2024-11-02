@@ -3,7 +3,7 @@
   import PollComponent from "./components/PollComponent.vue";
   import UserComponent from '@/components/UserComponent.vue';
   import VoteComponent from '@/components/VoteComponent.vue';
-  import Login from '@/components/Login.vue';
+  import Login from '@/components/UserLogin.vue';
   import SeePolls from '@/components/SeePolls.vue'
 
   const currentView = ref('login'); // login as defualt to make sure the user logs in
