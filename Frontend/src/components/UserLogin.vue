@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { defaultFetch } from '@/components/defaultFetch'
+import { defaultFetch } from '@/utils/defaultFetch'
 import { ref } from 'vue'
+import { setUserToken } from '@/utils/sessionStorageUtil'
 
 const users = ref('');
 const email = ref('');      // Ref for email input
@@ -18,15 +19,18 @@ async function login() {
     };
     console.log("body", body)
     const response = await defaultFetch("/users/login", "POST", null, body);
-    users.value = response.token;  // Assuming response is now { "token": "your_jwt_token" }
-    console.log("Token received:", users.value);
+    if(response != null){
+      // wrong login information
+      // no token
+      console.log("Token received:", JSON.stringify(response.token));
+      if (typeof window !== 'undefined') {
+        setUserToken(JSON.stringify(response.token));
+      }
+    }
   } catch (error) {
     console.error('Error:', error);
   } finally {
     loading.value = false;
-    if (typeof window !== 'undefined') {
-      sessionStorage.setItem('userToken', JSON.stringify(users.value));
-    }
     location.reload();
   }
 }

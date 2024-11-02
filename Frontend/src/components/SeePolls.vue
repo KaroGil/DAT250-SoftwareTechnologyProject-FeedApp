@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Get users
 import {ref} from 'vue'
-import { defaultFetch } from '@/components/defaultFetch'
+import { defaultFetch } from '@/utils/defaultFetch'
+import { getUserToken } from '@/utils/sessionStorageUtil'
 
 interface Poll {
   id: string; // UUID generated for the poll
@@ -24,11 +25,11 @@ const loading = ref(true);
 // Fetch all users
 async function fetchPolls() {
   try {
-    const response = await defaultFetch("/polls", "GET");
+    const token = getUserToken("lastname");
+    const response = await defaultFetch("/polls", "GET", token);
     polls.value = await response;
   } catch (error) {
     console.error('Error:', error);
-    alert('An error occurred. Please try again.');
   } finally {
     loading.value = false;
   }

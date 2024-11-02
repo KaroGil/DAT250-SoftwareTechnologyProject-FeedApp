@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final DomainManager manager;
 
     @Autowired
@@ -56,14 +56,14 @@ public class UserController {
             logger.info("user/email/pass is null");
             return null;
         }
-        logger.info("user gotten for login: " + user.getEmail() + ", password: " + user.getPassword());
-        logger.info("logging in " + user.getEmail());
+        logger.info("user gotten for login: {}, password: {}", user.getEmail(), user.getPassword());
+        logger.info("logging in {}", user.getEmail());
         User userFound = manager.login(user.getEmail(), user.getPassword());
         if(userFound == null) {
             logger.info("user not found");
             return null;
         }
-        logger.info("user found: " + userFound.getEmail());
+        logger.info("user found: {}", userFound.getEmail());
 
         // Create JWT token for the logged in user
         String token = JWTUtil.generateToken(userFound.getEmail(), "USER");

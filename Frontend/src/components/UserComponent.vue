@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Get users
 import {ref} from 'vue'
-import { defaultFetch } from '@/components/defaultFetch'
+import { defaultFetch } from '@/utils/defaultFetch'
+import { deleteUserToken } from '@/utils/sessionStorageUtil'
 
 interface User {
   id: number;
@@ -31,9 +32,10 @@ async function deleteUser(id: number) {
   try {
     await defaultFetch(`/users/${id}`, "DELETE");
     users.value = users.value.filter(user => user.id !== id);
+    deleteUserToken();
+    location.reload();
   } catch (error) {
     console.error('Error:', error);
-    alert('An error occurred. Please try again.');
   }
 }
 

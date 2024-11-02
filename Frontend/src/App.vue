@@ -5,6 +5,7 @@ import { onMounted, ref } from 'vue'
   import VoteComponent from '@/components/VoteComponent.vue';
   import Login from '@/components/UserLogin.vue';
   import SeePolls from '@/components/SeePolls.vue'
+import { deleteUserToken, getUserToken } from '@/utils/sessionStorageUtil'
 
   const currentView = ref('login'); // login as default to make sure the user logs in
   const changeView = (view: string) =>{
@@ -15,8 +16,7 @@ import { onMounted, ref } from 'vue'
 
   // Check if a user token exists in sessionStorage or localStorage to set login status
   onMounted(() => {
-    console.log(Boolean(sessionStorage.getItem('userToken')));
-    isLoggedIn.value = Boolean(sessionStorage.getItem('userToken')); // Replace with your token key
+    isLoggedIn.value = Boolean(getUserToken());
     if(isLoggedIn.value){
       changeView('seePoll');
     }
@@ -25,7 +25,7 @@ import { onMounted, ref } from 'vue'
   function logout() {
     // Remove the token and update login status
     changeView('login');
-    sessionStorage.removeItem('userToken');
+    deleteUserToken('userToken');
     isLoggedIn.value = false;
   }
 </script>
