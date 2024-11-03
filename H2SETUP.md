@@ -10,7 +10,7 @@ compileOnly("org.projectlombok:lombok")
 runtimeOnly("com.h2database:h2")
 ```
 
-And I modified `applications.properties` by adding the lines
+And I modified `applications.properties` by adding the configurations for H2.
 ```  
 spring.application.name=FeedApp
 
@@ -33,6 +33,9 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
 logging.level.org.hibernate.SQL=DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 ```
+I opted to use Spring Data JPA as it is useful for creating applications with databases like H2 (a relational database) 
+because it simplifies database access by providing an easy way to interact with relational databases using 
+Java Persistence API (JPA).
 
 I also had to make som adjustments to the `User()`-class since "User" is a reserved term for SQL. And I modified the
 other classes so `Lombok` can remove boilerplate code. 
@@ -56,8 +59,5 @@ URL:            jdbc:h2:mem:fullstack_db
 OR 
 URL:jdbc:h2:file:~/fullstack_db (depending on what is configured in application.properties)
 ```
-But the tables did not generate. They did however generate automatically when I went to 
-`http://localhost:8080/h2-console` in the browser and logged in there with the same credentials. 
-
-TODO: How to save data in database when sending POST request
-TODO: Generate UUID id values
+But the tables did not generate. They did however, generate automatically when I went to 
+`http://localhost:8080/h2-console` in the browser and logged in there with the same credentials.
