@@ -11,7 +11,6 @@ import dat250.group22.FeedApp.model.VoteOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,10 +60,10 @@ public class AnalyticsService {
         pollDocument.setPublic(poll.isPublic());
 
         // Create and add vote options to the document
-        List<VoteOptionDocument> optionDocuments = votes.entrySet().stream().map(entry -> {
+        List<VoteOptionDocument> optionDocuments = votes.keySet().stream().map(integer -> {
             VoteOptionDocument optionDoc = new VoteOptionDocument();
-            optionDoc.setId(String.valueOf(entry.getKey().getId()));
-            optionDoc.setCaption(entry.getKey().getCaption());
+            optionDoc.setId(String.valueOf(integer.getId()));
+            optionDoc.setCaption(integer.getCaption());
             return optionDoc;
         }).collect(Collectors.toList());
 
@@ -73,6 +72,5 @@ public class AnalyticsService {
         // Save to MongoDB
         mongoTemplate.save(pollDocument);
     }
-
 }
 
