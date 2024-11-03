@@ -1,16 +1,15 @@
 package dat250.group22.FeedApp.manager;
 
 
+import dat250.group22.FeedApp.service.AnalyticsService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 
-import java.time.Instant;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+
 import dat250.group22.FeedApp.repository.*;
 import dat250.group22.FeedApp.model.*;
 
@@ -23,18 +22,46 @@ public class DomainManager {
     private final PollRepository pollRepository;
     private final VoteRepository voteRepository;
 
+    // Service to send analytics data to RabbitMQ
+    private final AnalyticsService analyticsService;
+
+    // Constructor-based dependency injection for repositories and analytics service
     @Autowired
     public DomainManager(UserRepository userRepository, PollRepository pollRepository,
-                         VoteRepository voteRepository) {
+                         VoteRepository voteRepository, AnalyticsService analyticsService) {
         this.userRepository = userRepository;
         this.pollRepository = pollRepository;
         this.voteRepository = voteRepository;
+        this.analyticsService = analyticsService;
     }
 
-    // Vote methods
+    /* Analytics method */
+
+    // Method to collect and send analytics data
+    private void collectAnalyticsData(Vote vote) {
+        // Retrieve the poll using the poll ID from the vote
+        Poll poll = getPoll(vote.getPollId());
+
+        // Create a map of VoteOptions with their vote counts for analytics
+        Map<VoteOption, Integer> votes = poll.getOptions().stream()
+                .collect(Collectors.toMap(option -> option, option -> {
+                    // Count votes for each option
+                    return (int) voteRepository.findAll().stream()
+                            .filter(v -> v.getVoteOptionId().equals(option.getId()))
+                            .count(); // Count the number of votes for this option
+                }));
+
+        // Send the analytics data through the AnalyticsService
+        analyticsService.sendAnalyticsData(poll, votes);
+    }
+
+    /* Vote methods */
+
+    // Method to add a vote and trigger analytics data collection
     public void addVote(Vote vote) {
         logger.info("Vote created: {}", vote);
         voteRepository.save(vote);
+        collectAnalyticsData(vote);
     }
 
     public Collection<Vote> getVotes() {
@@ -99,7 +126,8 @@ public class DomainManager {
     }
 
 
-    // User methods
+    /* User methods */
+
     public void addUser(User user) {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()){
@@ -170,9 +198,8 @@ public class DomainManager {
         return null;
     }
 
+    /*  Poll methods */
 
-
-    // Poll methods
     public void addPoll(Poll poll) {
         pollRepository.save(poll);
         logger.info("Poll created: {}", poll);
@@ -189,7 +216,7 @@ public class DomainManager {
     public Poll getPoll(UUID pollID) {
         logger.info("Getting poll with id: {}", pollID);
         if (pollRepository.findById(pollID).isEmpty()) {
-            logger.info("Poll with id: {} not found.", pollID);
+            logger.info("Poll with id: {} not found for getPoll(UUID pollID).", pollID);
         }
         return pollRepository.findById(pollID).get();
     }
@@ -219,7 +246,7 @@ public class DomainManager {
         Optional<Poll> existingPoll = pollRepository.findById(pollID);
 
         if (existingPoll.isEmpty()) {
-            logger.info("Poll with id: {} not found.", pollID);
+            logger.info("Poll with id: {} not found for updatePoll(UUID pollID, Poll newPoll).", pollID);
         } else {
             // Copy existing fields to the new poll
             Poll current = existingPoll.get();
