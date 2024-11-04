@@ -3,6 +3,7 @@ package dat250.group22.FeedApp.service;
 import dat250.group22.FeedApp.document.PollDocument;
 import dat250.group22.FeedApp.document.VoteOptionDocument;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import dat250.group22.FeedApp.model.Poll;
@@ -19,6 +20,7 @@ public class AnalyticsService {
     private final RabbitTemplate rabbitTemplate;
     private final MongoTemplate mongoTemplate;
 
+    @Autowired
     public AnalyticsService(RabbitTemplate rabbitTemplate, MongoTemplate mongoTemplate) {
         this.rabbitTemplate = rabbitTemplate;
         this.mongoTemplate = mongoTemplate;
@@ -33,7 +35,7 @@ public class AnalyticsService {
         message.put("publishedAt", poll.getPublishedAt());
         message.put("validUntil", poll.getValidUntil());
 
-        // List of maps, where each entry contains the vote option's ID, caption, and count.
+        // List of maps, where each entry contains the vote option's ID, caption, and count
         List<Map<String, Object>> voteCounts = votes.entrySet().stream()
                 .map(entry -> {
                     Map<String, Object> voteData = new HashMap<>();
@@ -44,7 +46,7 @@ public class AnalyticsService {
                 })
                 .collect(Collectors.toList());
 
-        // Add the votes to the message
+        // Add the vote options and counts to the message
         message.put("votes", voteCounts);
 
         // Send the message to the "poll_queue" RabbitMQ queue

@@ -12,4 +12,3 @@ public class RabbitConfig {
         return new Queue("poll_queue", true); // 'true' makes the queue durable
     }
 }
-

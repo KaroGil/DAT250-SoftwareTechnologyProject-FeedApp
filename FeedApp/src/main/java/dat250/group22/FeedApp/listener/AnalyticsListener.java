@@ -10,8 +10,9 @@ public class AnalyticsListener {
     // Consumer class for analytics data
     @RabbitListener(queues = "poll_queue")
     public void receiveAnalyticsData(Map<String, Object> message) {
+
         // Process the analytics data
         System.out.println("Received analytics data: " + message);
-        // Here you can handle the message, e.g., save it to MongoDB
+        //TODO: Handle the message, e.g., save it to MongoDB
     }
 }

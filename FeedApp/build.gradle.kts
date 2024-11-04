@@ -29,6 +29,8 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	compileOnly("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation ("de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.0.0")
+
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	// Dependencies for JWT token
