@@ -3,11 +3,10 @@ import { defaultFetch } from '@/utils/defaultFetch'
 import { ref } from 'vue'
 import { setUserToken } from '@/utils/sessionStorageUtil'
 
-const users = ref('');
 const email = ref('');      // Ref for email input
 const password = ref('');    // Ref for password input
 const loading = ref(false);  // Optional loading indicator
-
+const errormsg = ref('');
 
 async function login() {
   loading.value = true;
@@ -20,18 +19,19 @@ async function login() {
     console.log("body", body)
     const response = await defaultFetch("/users/login", "POST", null, body);
     if(response != null){
-      // wrong login information
-      // no token
       console.log("Token received:", JSON.stringify(response.token));
       if (typeof window !== 'undefined') {
         setUserToken(JSON.stringify(response.token));
+        location.reload();
       }
+    }else{
+      // wrong login
+      errormsg.value = "Wrong login information:(";
     }
   } catch (error) {
     console.error('Error:', error);
   } finally {
     loading.value = false;
-    location.reload();
   }
 }
 
@@ -49,6 +49,7 @@ async function login() {
         <button @click="login">Login</button>
         <button @click="props.onCancel">Cancel</button>
       </div>
+        <p class="error-msg" v-if="errormsg">{{errormsg}}</p>
     </div>
   </div>
 </template>
@@ -67,5 +68,9 @@ async function login() {
 .login{
   display: flex;
   justify-content: center;
+}
+
+.error-msg{
+  color: red;
 }
 </style>
