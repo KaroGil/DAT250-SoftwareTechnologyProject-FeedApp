@@ -1,9 +1,9 @@
 package dat250.group22.FeedApp.model;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
