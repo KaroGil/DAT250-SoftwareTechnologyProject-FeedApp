@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { defaultFetch } from '@/components/defaultFetch';
 
-// Definer grensesnitt for Poll og VoteOption
+// Define interfaces for Poll and VoteOption
 interface Poll {
   id: string;
   question: string;
@@ -14,11 +14,12 @@ interface VoteOption {
   text: string;
 }
 
+// Reactive variables to store poll data and loading state
 const polls = ref<Poll[]>([]);
 const loading = ref(true);
-const openPollId = ref<string | null>(null); // ID-en til den avstemningen som er åpen (dropdown)
+const openPollId = ref<string | null>(null); // Stores the ID of the currently open poll
 
-// Funksjon for å hente alle avstemninger
+// Fetches all polls from the server
 async function fetchPolls() {
   try {
     const response = await defaultFetch("/polls", "GET");
@@ -31,7 +32,8 @@ async function fetchPolls() {
   }
 }
 
-// Funksjon for å stemme på et alternativ
+// Sends a vote to the server for a specific poll option
+// TODO
 async function vote(pollId: string, optionId: string) {
   try {
     await defaultFetch(`/polls/${pollId}/vote`, "POST", undefined, { optionId });
@@ -42,12 +44,12 @@ async function vote(pollId: string, optionId: string) {
   }
 }
 
-// Funksjon for å åpne/lukke dropdown for en bestemt avstemning
+// Toggles dropdown visibility for a specific poll
 function toggleOptions(pollId: string) {
   openPollId.value = openPollId.value === pollId ? null : pollId;
 }
 
-// Henter avstemninger når komponenten monteres
+// Fetch polls when the component is mounted
 fetchPolls();
 </script>
 
@@ -57,12 +59,16 @@ fetchPolls();
       <h2>All Polls</h2>
       <p v-if="loading">Loading polls...</p>
       <div v-else>
+        <!-- Loop through each poll and display its question -->
         <ul v-for="poll in polls" :key="poll.id" class="poll">
-          <!-- Klikk på spørsmålet for å vise/skjule alternativene -->
           <li @click="toggleOptions(poll.id)" class="poll-question">
+            <!-- Dropdown arrow rotates when open -->
+            <span :class="{'arrow': true, 'open': openPollId === poll.id}">▼</span>
             {{ poll.question }}
           </li>
+          <!-- Show options if this poll is open -->
           <div v-if="openPollId === poll.id" class="poll-options">
+            <!-- Display each option as a button -->
             <div v-for="option in poll.options" :key="option.id" class="poll-option">
               <button @click="vote(poll.id, option.id)">
                 {{ option.text }}
@@ -80,22 +86,34 @@ fetchPolls();
   background-color: white;
   padding: 20px;
   border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Light shadow for modal effect */
 }
 
 .poll {
   font-size: 18px;
-  margin-bottom: 20px;
+  margin-bottom: 20px; /* Spacing between polls */
 }
 
 .poll-question {
   font-weight: bold;
-  cursor: pointer;
+  cursor: pointer; /* Makes the question clickable */
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between arrow and question */
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform 0.3s ease; /* Smooth rotation transition */
+}
+
+.arrow.open {
+  transform: rotate(180deg); /* Rotate arrow when open */
 }
 
 .poll-options {
-  margin-top: 10px;
+  margin-top: 10px; /* Space between question and options */
 }
 
 .poll-option button {
@@ -104,13 +122,13 @@ fetchPolls();
   color: white;
   border-radius: 5px;
   padding: 10px;
-  margin: 5px 0;
+  margin: 5px 40px; /* Adds space around each option */
   cursor: pointer;
   width: 200px;
-  text-align: left;
+  text-align: left; /* Aligns text to the left within button */
 }
 
 .poll-option button:hover {
-  background-color: darkslateblue;
+  background-color: darkslateblue; /* Darker color on hover */
 }
 </style>
