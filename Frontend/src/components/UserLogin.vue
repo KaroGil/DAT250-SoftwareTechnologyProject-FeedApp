@@ -17,7 +17,7 @@ async function login() {
       password: password.value,
     }
     console.log('body', body)
-    const response = await defaultFetch('/users/login', 'POST', null, body)
+    const response = await defaultFetch('/users/login', 'POST', undefined, body)
     if (response != null) {
       console.log('Token received:', JSON.stringify(response.token))
       if (typeof window !== 'undefined') {
@@ -46,7 +46,6 @@ async function login() {
       <input type="password" v-model="password" />
       <div>
         <button @click="login">Login</button>
-        <button @click="props.onCancel">Cancel</button>
       </div>
       <p class="error-msg" v-if="errormsg">{{ errormsg }}</p>
     </div>

@@ -7,9 +7,9 @@
  * Returns the users JWT token from the session storage
  * Works only if a user is logged in, else it will return null
  * */
-export const getUserToken = () => {
+export const getUserToken = (): string | undefined => {
   const token = sessionStorage.getItem('userToken')
-  return token ? token : null
+  return token ? token : undefined
 }
 
 /**

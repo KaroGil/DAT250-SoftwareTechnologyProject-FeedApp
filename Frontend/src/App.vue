@@ -25,7 +25,7 @@ onMounted(() => {
 function logout() {
   // Remove the token and update login status
   changeView('login')
-  deleteUserToken('userToken')
+  deleteUserToken()
   isLoggedIn.value = false
 }
 </script>

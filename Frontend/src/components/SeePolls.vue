@@ -25,7 +25,7 @@ const loading = ref(true)
 // Fetch all users
 async function fetchPolls() {
   try {
-    const token = getUserToken('lastname')
+    const token: string | undefined = getUserToken()
     const response = await defaultFetch('/polls', 'GET', token)
     polls.value = await response
   } catch (error) {
@@ -50,8 +50,8 @@ fetchPolls()
           <li>
             {{ poll.question }}
           </li>
-          <div v-for="option in poll.options" :key="option.id">
-            <button @click="vote(poll.id, option.id)">
+          <div v-for="option in poll.options" :key="option.text">
+            <button>
               {{ option.text }}
             </button>
           </div>

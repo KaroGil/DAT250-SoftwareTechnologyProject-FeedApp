@@ -40,7 +40,6 @@ const createPoll = async () => {
         <input v-model="pollOptions" type="text" />
       </label>
       <button @click="createPoll">Submit</button>
-      <button @click="props.onCancel">Cancel</button>
     </div>
   </div>
 </template>
