@@ -18,7 +18,8 @@ async function login() {
     }
     console.log('body', body)
     const response = await defaultFetch('/users/login', 'POST', undefined, body)
-    if (response != null) {
+    console.log(response)
+    if (response.ok) {
       console.log('Token received:', JSON.stringify(response.token))
       if (typeof window !== 'undefined') {
         setUserToken(JSON.stringify(response.token))
