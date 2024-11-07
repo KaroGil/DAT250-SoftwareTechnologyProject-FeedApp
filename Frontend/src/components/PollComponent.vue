@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from 'vue'
 
-const showPollForm = ref(false);
-const pollQuestion = ref('');
-const pollOptions = ref('');
+const showPollForm = ref(false)
+const pollQuestion = ref('')
+const pollOptions = ref('')
 
 const createPoll = async () => {
   const response = await fetch('http://localhost:8080/polls', {
@@ -15,15 +15,15 @@ const createPoll = async () => {
       question: pollQuestion.value,
       options: pollOptions.value.split(','),
     }),
-  });
+  })
 
   if (response.ok) {
-    alert('Poll created successfully!');
-    showPollForm.value = false; // Skjul skjemaet etter innsending
+    alert('Poll created successfully!')
+    showPollForm.value = false // Skjul skjemaet etter innsending
   } else {
-    alert('Failed to create poll');
+    alert('Failed to create poll')
   }
-};
+}
 </script>
 
 <template>

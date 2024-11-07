@@ -7,21 +7,21 @@
  * Returns the users JWT token from the session storage
  * Works only if a user is logged in, else it will return null
  * */
-export const getUserToken =  () => {
-  const token = sessionStorage.getItem("userToken");
-  return token ? token : null;
+export const getUserToken = () => {
+  const token = sessionStorage.getItem('userToken')
+  return token ? token : null
 }
 
 /**
  * Set the value of the userToken session storage
  * */
-export const setUserToken =  (value: string) => {
-  sessionStorage.setItem("userToken", value);
+export const setUserToken = (value: string) => {
+  sessionStorage.setItem('userToken', value)
 }
 
 /**
  * Deletes the value of the user token
  */
 export const deleteUserToken = () => {
-  sessionStorage.removeItem("userToken");
+  sessionStorage.removeItem('userToken')
 }

@@ -1,43 +1,42 @@
 <script setup lang="ts">
 // Get users
-import {ref} from 'vue'
+import { ref } from 'vue'
 import { defaultFetch } from '@/utils/defaultFetch'
 import { getUserToken } from '@/utils/sessionStorageUtil'
 
 interface Poll {
-  id: string; // UUID generated for the poll
-  creatorUserID: string; // UUID of the user who created the poll
-  question: string; // The poll's question
-  publishedAt: string; // The time when the poll was published (ISO 8601 format)
-  validUntil: string; // The expiration date and time for the poll (ISO 8601 format)
-  options: VoteOption[]; // An array of vote options for the poll
-  isPublic: boolean; // Indicates whether the poll is public
+  id: string // UUID generated for the poll
+  creatorUserID: string // UUID of the user who created the poll
+  question: string // The poll's question
+  publishedAt: string // The time when the poll was published (ISO 8601 format)
+  validUntil: string // The expiration date and time for the poll (ISO 8601 format)
+  options: VoteOption[] // An array of vote options for the poll
+  isPublic: boolean // Indicates whether the poll is public
 }
 
 interface VoteOption {
-  text: string; // The text for the vote option
+  text: string // The text for the vote option
   // Add any additional fields for VoteOption if necessary
 }
 
-const polls = ref<Poll[]>([]);
-const loading = ref(true);
+const polls = ref<Poll[]>([])
+const loading = ref(true)
 
 // Fetch all users
 async function fetchPolls() {
   try {
-    const token = getUserToken("lastname");
-    const response = await defaultFetch("/polls", "GET", token);
-    polls.value = await response;
+    const token = getUserToken('lastname')
+    const response = await defaultFetch('/polls', 'GET', token)
+    polls.value = await response
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 
 // Call the fetchUsers function when the component is mounted
-fetchPolls();
-
+fetchPolls()
 </script>
 
 <template>
