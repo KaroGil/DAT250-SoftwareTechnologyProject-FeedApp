@@ -44,9 +44,7 @@ async function login() {
       <input type="text" v-model="email" />
       <label>Password:</label>
       <input type="password" v-model="password" />
-      <div>
         <button @click="login">Login</button>
-      </div>
       <p class="error-msg" v-if="errormsg">{{ errormsg }}</p>
     </div>
   </div>
