@@ -6,6 +6,7 @@ import VoteComponent from '@/components/VoteComponent.vue'
 import Login from '@/components/UserLogin.vue'
 import SeePolls from '@/components/SeePolls.vue'
 import { deleteUserToken, getUserToken } from '@/utils/sessionStorageUtil'
+import CreateUser from '@/components/CreateUser.vue'
 
 const currentView = ref('login') // login as default to make sure the user logs in
 const changeView = (view: string) => {
@@ -42,6 +43,7 @@ function logout() {
 
   <main class="navbar">
     <button v-if="!isLoggedIn" @click="changeView('login')">Login</button>
+    <button  v-if="!isLoggedIn" @click="changeView('createUser')">Create User</button>
     <button v-if="isLoggedIn" @click="logout()">Logout</button>
     <button @click="changeView('seePoll')">See Polls</button>
     <!--    Only visable if user logged in-->
@@ -52,6 +54,7 @@ function logout() {
 
   <section>
     <Login v-if="currentView === 'login'" />
+    <CreateUser v-if="currentView === 'createUser'" />
     <SeePolls v-if="currentView === 'seePoll'" />
     <!--    Only visable if user logged in-->
     <UserComponent v-if="isLoggedIn && currentView === 'seeUsers'" />

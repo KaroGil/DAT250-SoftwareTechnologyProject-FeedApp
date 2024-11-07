@@ -9,7 +9,7 @@ export const defaultFetch = async (
     method: method,
     headers: {
       'Content-Type': 'application/json',
-      // 'Authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify(body),
   })
@@ -22,6 +22,6 @@ export const defaultFetch = async (
   if (contentType && contentType.includes('application/json')) {
     return response.json()
   } else {
-    return null
+    return response
   }
 }
