@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import { ref } from 'vue'
 import { defaultFetch } from '@/utils/defaultFetch'
 import { getUserToken } from '@/utils/sessionStorageUtil'
@@ -21,7 +20,7 @@ async function createUser() {
     if (!response.ok) {
       // wrong info
       errormsg.value = 'Wrong format for information:('
-    }else{
+    } else {
       location.reload()
     }
   } catch (error) {

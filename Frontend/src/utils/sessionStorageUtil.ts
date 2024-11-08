@@ -16,7 +16,7 @@ export const getUserToken = (): string | undefined => {
  * Set the value of the userToken session storage
  * */
 export const setUserToken = (value: string) => {
-  if (value){
+  if (value) {
     sessionStorage.setItem('userToken', value)
   }
 }

@@ -43,7 +43,9 @@ function logout() {
 
   <main class="navbar">
     <button v-if="!isLoggedIn" @click="changeView('login')">Login</button>
-    <button  v-if="!isLoggedIn" @click="changeView('createUser')">Create User</button>
+    <button v-if="!isLoggedIn" @click="changeView('createUser')">
+      Create User
+    </button>
     <button v-if="isLoggedIn" @click="logout()">Logout</button>
     <button @click="changeView('seePoll')">See Polls</button>
     <!--    Only visable if user logged in-->
