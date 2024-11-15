@@ -189,9 +189,9 @@ public class DomainManager {
         }
     }
 
-    public User login(String username, String password) {
+    public User login(String email, String password) {
         for (User user : userRepository.findAll()) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
                 return user;
             }
         }

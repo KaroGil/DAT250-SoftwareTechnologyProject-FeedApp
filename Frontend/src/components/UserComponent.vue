@@ -1,45 +1,46 @@
 <script setup lang="ts">
 // Get users
-import {ref} from 'vue'
-import { defaultFetch } from '@/components/defaultFetch'
+import { ref } from 'vue'
+import { defaultFetch } from '@/utils/defaultFetch'
+import { deleteUserToken } from '@/utils/sessionStorageUtil'
 
 interface User {
-  id: number;
-  name: string;
-  email: string;
+  id: number
+  name: string
+  email: string
 }
 
-const users = ref<User[]>([]);
-const loading = ref(true);
+const users = ref<User[]>([])
+const loading = ref(true)
 
 // Fetch all users
 async function fetchUsers() {
   try {
-    const response = await defaultFetch("/users", "GET");
-    users.value = await response;
-    console.log("users: ", users)
+    const response = await defaultFetch('/users', 'GET')
+    users.value = await response
+    console.log('users: ', users)
   } catch (error) {
-    console.error('Error:', error);
-    alert('An error occurred. Please try again.');
+    console.error('Error:', error)
+    alert('An error occurred. Please try again.')
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 
 // Delete a user
 async function deleteUser(id: number) {
   try {
-    await defaultFetch(`/users/${id}`, "DELETE");
-    users.value = users.value.filter(user => user.id !== id);
+    await defaultFetch(`/users/${id}`, 'DELETE')
+    users.value = users.value.filter(user => user.id !== id)
+    deleteUserToken()
+    location.reload()
   } catch (error) {
-    console.error('Error:', error);
-    alert('An error occurred. Please try again.');
+    console.error('Error:', error)
   }
 }
 
 // Call the fetchUsers function when the component is mounted
-fetchUsers();
-
+fetchUsers()
 </script>
 
 <template>

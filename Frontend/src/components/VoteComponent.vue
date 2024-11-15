@@ -1,6 +1,4 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <main>
@@ -8,7 +6,6 @@
       <!-- Poll creation form -->
       <div class="modal">
         <h2>Vote</h2>
-
       </div>
     </div>
   </main>

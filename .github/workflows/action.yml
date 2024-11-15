@@ -29,28 +29,28 @@ jobs:
         working-directory: ./FeedApp
         run: ./gradlew build
 
-    frontend-build:
-      runs-on: ubuntu-latest
-      defaults:
-          run:
-            working-directory: ./Frontend
-      steps:
-          - name: Checkout code 🪞
-            uses: actions/checkout@v3
+  frontend-build:
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+          working-directory: ./Frontend
+    steps:
+        - name: Checkout code 🪞
+          uses: actions/checkout@v3
 
-          - name: Setup Node.js 🪜
-            uses: actions/setup-node@v3
-            with:
-              node-version: "18" # Specify your Node.js version
+        - name: Setup Node.js 🪜
+          uses: actions/setup-node@v3
+          with:
+            node-version: "18" # Specify your Node.js version
 
-          - name: Install dependencies ⏳
-            run: npm install
+        - name: Install dependencies ⏳
+          run: npm install
 
-          - name: Run ESLint 🔧
-            run: npm run lint
+        - name: Run ESLint 🔧
+          run: npm run lint
 
-          - name: Run Prettier 💎
-            run: npm run prettier
+        - name: Run Prettier 💎
+          run: npm run prettier
 
-          - name: Build Project 🔨
-            run: npm run build
+        - name: Build Project 🔨
+          run: npm run build
