@@ -12,32 +12,43 @@ import java.util.stream.Collectors;
 
 import dat250.group22.FeedApp.repository.*;
 import dat250.group22.FeedApp.model.*;
+import dat250.group22.FeedApp.document.*;
 
 @Component
 public class DomainManager {
     private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
 
-    // JPARepository for model classes
+    // JPARepository for entity classes
     private final UserRepository userRepository;
     private final PollRepository pollRepository;
     private final VoteRepository voteRepository;
+
+    // MongoRepository for document classes
+    private final UserDocumentRepository userDocumentRepository;
+    private final PollDocumentRepository pollDocumentRepository;
+    private final VoteDocumentRepository voteDocumentRepository;
 
     // Service to send analytics data to RabbitMQ
     private final AnalyticsService analyticsService;
 
     // Constructor-based dependency injection for repositories and analytics service
     @Autowired
-    public DomainManager(UserRepository userRepository, PollRepository pollRepository,
-                         VoteRepository voteRepository, AnalyticsService analyticsService) {
+    public DomainManager(UserRepository userRepository, PollRepository pollRepository, VoteRepository voteRepository,
+                         UserDocumentRepository userDocumentRepository,
+                         PollDocumentRepository pollDocumentRepository,
+                         VoteDocumentRepository voteDocumentRepository,
+                         AnalyticsService analyticsService) {
         this.userRepository = userRepository;
         this.pollRepository = pollRepository;
         this.voteRepository = voteRepository;
+        this.userDocumentRepository = userDocumentRepository;
+        this.pollDocumentRepository = pollDocumentRepository;
+        this.voteDocumentRepository = voteDocumentRepository;
         this.analyticsService = analyticsService;
     }
 
-    /* Analytics method */
 
-    // Method to collect and send analytics data
+    /* Analytics method */
     private void collectAnalyticsData(Vote vote) {
         // Retrieve the poll using the poll ID from the vote
         Poll poll = getPoll(vote.getPoll().getId());
@@ -55,9 +66,8 @@ public class DomainManager {
         analyticsService.sendAnalyticsData(poll, votes);
     }
 
-    /* Vote methods */
 
-    // Method to add a vote and trigger analytics data collection
+    /* Vote Entity methods */
     public void addVote(Vote vote) {
         logger.info("Vote created: {}", vote);
         voteRepository.save(vote);
@@ -126,8 +136,44 @@ public class DomainManager {
     }
 
 
-    /* User methods */
+    /* Vote Document methods */
+    public void addVoteDocument(VoteDocument voteDocument) {
+        voteDocumentRepository.save(voteDocument);
+        logger.info("VoteDocument created: {}", voteDocument);
+    }
 
+    public Collection<VoteDocument> getVoteDocuments() {
+        logger.info("Getting all VoteDocuments...");
+        return voteDocumentRepository.findAll();
+    }
+
+    public VoteDocument getVoteDocument(String voteId) {
+        logger.info("Getting VoteDocument with id: {}", voteId);
+        return voteDocumentRepository.findById(voteId).orElse(null);
+    }
+
+    public void deleteVoteDocument(String voteId) {
+        logger.info("Deleting VoteDocument with id: {}", voteId);
+        voteDocumentRepository.deleteById(voteId);
+        logger.info("VoteDocument with id {} deleted", voteId);
+    }
+
+    public void updateVoteDocument(String voteId, VoteDocument newVoteDocument) {
+        logger.info("Updating VoteDocument with id: {}", voteId);
+        VoteDocument existingVote = voteDocumentRepository.findById(voteId).orElse(null);
+        if (existingVote != null) {
+            existingVote.setVoteOptionId(newVoteDocument.getVoteOptionId());
+            existingVote.setVotedBy(newVoteDocument.getVotedBy());
+            existingVote.setPollId(newVoteDocument.getPollId());
+            voteDocumentRepository.save(existingVote);
+            logger.info("VoteDocument with id {} updated", voteId);
+        } else {
+            logger.warn("VoteDocument with id {} not found.", voteId);
+        }
+    }
+
+
+    /* User Entity methods */
     public void addUser(User user) {
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()){
@@ -198,8 +244,45 @@ public class DomainManager {
         return null;
     }
 
-    /*  Poll methods */
 
+    /* User Document methods */
+    public void addUserDocument(UserDocument userDocument) {
+        userDocumentRepository.save(userDocument);
+        logger.info("UserDocument created: {}", userDocument);
+    }
+
+    public Collection<UserDocument> getUserDocuments() {
+        logger.info("Getting all UserDocuments...");
+        return userDocumentRepository.findAll();
+    }
+
+    public UserDocument getUserDocument(String userId) {
+        logger.info("Getting UserDocument with id: {}", userId);
+        return userDocumentRepository.findById(userId).orElse(null);
+    }
+
+    public void deleteUserDocument(String userId) {
+        logger.info("Deleting UserDocument with id: {}", userId);
+        userDocumentRepository.deleteById(userId);
+        logger.info("UserDocument with id {} deleted", userId);
+    }
+
+    public void updateUserDocument(String userId, UserDocument newUserDocument) {
+        logger.info("Updating UserDocument with id: {}", userId);
+        UserDocument existingUser = userDocumentRepository.findById(userId).orElse(null);
+        if (existingUser != null) {
+            existingUser.setUsername(newUserDocument.getUsername());
+            existingUser.setEmail(newUserDocument.getEmail());
+            existingUser.setPassword(newUserDocument.getPassword());
+            userDocumentRepository.save(existingUser);
+            logger.info("UserDocument with id {} updated", userId);
+        } else {
+            logger.warn("UserDocument with id {} not found.", userId);
+        }
+    }
+
+
+    /*  Poll Entity methods */
     public void addPoll(Poll poll) {
         pollRepository.save(poll);
         logger.info("Poll created: {}", poll);
@@ -267,4 +350,43 @@ public class DomainManager {
         current.setPublic(newPoll.isPublic());
         return current;
     }
+
+
+    /* Poll Document methods */
+    public void addPollDocument(PollDocument pollDocument) {
+        pollDocumentRepository.save(pollDocument);
+        logger.info("PollDocument created: {}", pollDocument);
+    }
+
+    public Collection<PollDocument> getPollDocuments() {
+        logger.info("Getting all PollDocuments...");
+        return pollDocumentRepository.findAll();
+    }
+
+    public PollDocument getPollDocument(String pollId) {
+        logger.info("Getting PollDocument with id: {}", pollId);
+        return pollDocumentRepository.findById(pollId).orElse(null);
+    }
+
+    public void deletePollDocument(String pollId) {
+        logger.info("Deleting PollDocument with id: {}", pollId);
+        pollDocumentRepository.deleteById(pollId);
+        logger.info("PollDocument with id {} deleted", pollId);
+    }
+
+    public void updatePollDocument(String pollId, PollDocument newPollDocument) {
+        logger.info("Updating PollDocument with id: {}", pollId);
+        PollDocument existingPoll = pollDocumentRepository.findById(pollId).orElse(null);
+        if (existingPoll != null) {
+            existingPoll.setQuestion(newPollDocument.getQuestion());
+            existingPoll.setPublishedAt(newPollDocument.getPublishedAt());
+            existingPoll.setValidUntil(newPollDocument.getValidUntil());
+            existingPoll.setPublic(newPollDocument.isPublic());
+            pollDocumentRepository.save(existingPoll);
+            logger.info("PollDocument with id {} updated", pollId);
+        } else {
+            logger.warn("PollDocument with id {} not found.", pollId);
+        }
+    }
+
 }

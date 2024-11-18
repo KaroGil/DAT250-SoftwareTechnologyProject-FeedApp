@@ -7,16 +7,16 @@ wait_for() {
   local SERVICE_NAME=$3
 
   echo "Waiting for $SERVICE_NAME on $HOST:$PORT to be ready..."
-  for i in $(seq 30); do
+  for i in $(seq 90); do # Wait for 90 seconds before trying to connect to port
     nc -z "$HOST" "$PORT" > /dev/null 2>&1
     result=$?
     if [ $result -eq 0 ]; then
       echo "$SERVICE_NAME is available on $HOST:$PORT!"
       return 0
     fi
-    sleep 1
+    sleep 5 # Sleep for 5 seconds before trying again
   done
-  echo "$SERVICE_NAME is not available on $HOST:$PORT after 30 seconds."
+  echo "$SERVICE_NAME is not available on $HOST:$PORT after 3 minutes."
   return 1
 }
 
