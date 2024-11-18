@@ -56,7 +56,6 @@ public class AnalyticsService {
         PollDocument pollDocument = new PollDocument();
         pollDocument.setId(String.valueOf(poll.getId()));
         pollDocument.setQuestion(poll.getQuestion());
-        pollDocument.setCreatorUserID(String.valueOf(poll.getCreatorUserID()));
         pollDocument.setPublishedAt(poll.getPublishedAt());
         pollDocument.setValidUntil(poll.getValidUntil());
         pollDocument.setPublic(poll.isPublic());
@@ -75,4 +74,3 @@ public class AnalyticsService {
         mongoTemplate.save(pollDocument);
     }
 }
-

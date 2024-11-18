@@ -40,14 +40,14 @@ public class DomainManager {
     // Method to collect and send analytics data
     private void collectAnalyticsData(Vote vote) {
         // Retrieve the poll using the poll ID from the vote
-        Poll poll = getPoll(vote.getPollId());
+        Poll poll = getPoll(vote.getPoll().getId());
 
         // Create a map of VoteOptions with their vote counts for analytics
         Map<VoteOption, Integer> votes = poll.getOptions().stream()
                 .collect(Collectors.toMap(option -> option, option -> {
                     // Count votes for each option
                     return (int) voteRepository.findAll().stream()
-                            .filter(v -> v.getVoteOptionId().equals(option.getId()))
+                            .filter(v -> v.getVoteOption().getId().equals(option.getId()))
                             .count(); // Count the number of votes for this option
                 }));
 
@@ -103,11 +103,11 @@ public class DomainManager {
 
             // Only update the voteOptionID, keep the other fields
             Vote voteToUpdate = voteRepository.findById(existingVote.getId()).get();
-            voteToUpdate.setVoteOptionId(newVote.getVoteOptionId());
+            voteToUpdate.setVoteOption(newVote.getVoteOption());
 
             // Save updated vote
             Vote updatedVote = voteRepository.save(voteToUpdate);
-            logger.info("Updated vote with id {} with new voteOptionID {}", voteID, updatedVote.getVoteOptionId());
+            logger.info("Updated vote with id {} with new voteOptionID {}", voteID, updatedVote.getVoteOption().getId());
         } else {
             logger.warn("Vote with id {} not found.", voteID);
             throw new RuntimeException("Vote with id " + voteID + " not found.");
@@ -117,7 +117,7 @@ public class DomainManager {
     public Vote findVoteByUserAndPoll(UUID votedBy, UUID pollID) {
         logger.info("Finding vote by user id {} and poll id {}", votedBy, pollID);
         for (Vote vote : voteRepository.findAll()) {
-            if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollID)) {
+            if (vote.getVotedBy().equals(votedBy) && vote.getPoll().getId().equals(pollID)) {
                 return vote;
             }
         }
@@ -149,7 +149,7 @@ public class DomainManager {
     public User getUser(UUID userID) {
         logger.info("Getting user with id: {}", userID);
         if (userRepository.findById(userID).isEmpty()) {
-            logger.info("User with id: {} not found.", userID);
+            logger.info("User with id: {} not found for getUser(UUID userID).", userID);
         }
         return userRepository.findById(userID).get();
     }
@@ -173,7 +173,7 @@ public class DomainManager {
         Optional<User> existingUser = userRepository.findById(userID);
 
         if (existingUser.isEmpty()) {
-            logger.info("User with id: {} not found.", userID);
+            logger.info("User with id: {} not found for updateUser(UUID userID, User newUser).", userID);
         } else {
             // Copy existing fields to the new user
             User current = existingUser.get();
@@ -249,17 +249,22 @@ public class DomainManager {
             logger.info("Poll with id: {} not found for updatePoll(UUID pollID, Poll newPoll).", pollID);
         } else {
             // Copy existing fields to the new poll
-            Poll current = existingPoll.get();
-
-            // Update only the fields that are not null or empty into the new user
-            current.setQuestion(newPoll.getQuestion() != null ? newPoll.getQuestion() : current.getQuestion());
-            current.setPublishedAt(newPoll.getPublishedAt() != null ? newPoll.getPublishedAt() : current.getPublishedAt());
-            current.setValidUntil(newPoll.getValidUntil() != null ? newPoll.getValidUntil() : current.getValidUntil());
-            current.setPublic(newPoll.isPublic());
+            Poll current = getPoll(newPoll, existingPoll);
 
             // Save the new poll
             Poll updatedPoll = pollRepository.save(current);
             logger.info("Updated poll with id {} to new poll: {}", pollID, updatedPoll);
         }
+    }
+
+    private static Poll getPoll(Poll newPoll, Optional<Poll> existingPoll) {
+        Poll current = existingPoll.get();
+
+        // Update only the fields that are not null or empty into the new user
+        current.setQuestion(newPoll.getQuestion() != null ? newPoll.getQuestion() : current.getQuestion());
+        current.setPublishedAt(newPoll.getPublishedAt() != null ? newPoll.getPublishedAt() : current.getPublishedAt());
+        current.setValidUntil(newPoll.getValidUntil() != null ? newPoll.getValidUntil() : current.getValidUntil());
+        current.setPublic(newPoll.isPublic());
+        return current;
     }
 }

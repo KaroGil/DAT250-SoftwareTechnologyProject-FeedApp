@@ -1,8 +1,7 @@
 package dat250.group22.FeedApp.model;
 
-
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,15 +16,17 @@ public class Poll implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private UUID creatorUserID;
     private String question;
     private Instant publishedAt;
     private Instant validUntil;
     private boolean isPublic;
 
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "poll_id")
+    // One-to-Many relationship with VoteOption
+    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<VoteOption> options = new HashSet<>();
 
+    // Many-to-One relationship with User (creator of the poll)
+    @ManyToOne
+    @JoinColumn(name = "creator_user_id")  // Foreign key for the creator (no need for insertable=false, updatable=false unless needed)
+    private User creatorUser;
 }

@@ -23,14 +23,16 @@ public class VoteController {
     @Autowired
     public VoteController(DomainManager manager) { this.manager = manager; }
 
+
     @PostMapping
     public ResponseEntity<String> createOrUpdateVote(@RequestBody Vote vote) {
-        Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPollId());
+        // Find the vote by user and poll (now using the poll object instead of pollId)
+        Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPoll().getId());
 
         if (existingVote != null){
             try{
                 existingVote.setPublishAt(Instant.now());
-                existingVote.setVoteOptionId(vote.getVoteOptionId());
+                existingVote.setVoteOption(vote.getVoteOption());  // Set voteOption instead of voteOptionId
                 manager.updateVote(existingVote.getId(), existingVote);
                 return ResponseEntity.status(HttpStatus.OK).build();
             } catch (IllegalArgumentException e) {
@@ -38,7 +40,8 @@ public class VoteController {
             }
         } else {
             try {
-                Vote newVote = new Vote(vote.getVotedBy(), vote.getVoteOptionId(), vote.getPollId());
+                // Create a new vote using the poll and voteOption objects
+                Vote newVote = new Vote(vote.getVotedBy(), vote.getVoteOption(), vote.getPoll());
                 newVote.setPublishAt(Instant.now());
                 manager.addVote(newVote);
                 return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -49,11 +52,17 @@ public class VoteController {
     }
 
     @GetMapping
-    public Collection<Vote> getVotes() { return manager.getVotes(); }
+    public Collection<Vote> getVotes() {
+        return manager.getVotes();
+    }
 
     @DeleteMapping("/{voteId}")
-    public void deleteVote(@PathVariable UUID voteId) { manager.removeVote(voteId); }
+    public void deleteVote(@PathVariable UUID voteId) {
+        manager.removeVote(voteId);
+    }
 
     @PutMapping("/{voteId}")
-    public void updateVote(@PathVariable UUID voteId, @RequestBody Vote newVote) { manager.updateVote(voteId, newVote); }
+    public void updateVote(@PathVariable UUID voteId, @RequestBody Vote newVote) {
+        manager.updateVote(voteId, newVote);
+    }
 }
