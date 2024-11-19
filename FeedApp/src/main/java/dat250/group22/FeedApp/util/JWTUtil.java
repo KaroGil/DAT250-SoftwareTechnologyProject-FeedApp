@@ -14,9 +14,7 @@ import java.util.*;
 public class JWTUtil {
     private static final Logger logger = LoggerFactory.getLogger(JWTUtil.class);
     private static final String SECRET = "nMzOZLk5h5Rf9TcGtJmsvjQTU4bpKgTH07Fpht9XvHE";
-    private static byte[] key = "secretsecretsecretsecretsecretsecretsecretsecretsecretsecret".getBytes();
-
-    private static final Key key2 = new SecretKeySpec(Base64.getDecoder().decode(SECRET), SignatureAlgorithm.HS256.getJcaName());    private static final long EXPIRATION_TIME = 86400000; //1 day in ms
+    private static final Key key = new SecretKeySpec(Base64.getDecoder().decode(SECRET), SignatureAlgorithm.HS256.getJcaName());    private static final long EXPIRATION_TIME = 86400000; //1 day in ms
 
     public static String generateToken(UUID userId, String role) {
         Map<String, Object> claims = new HashMap<>();
@@ -45,15 +43,7 @@ public class JWTUtil {
         if (token.startsWith("Bearer ")) {
             token = token.substring(7).trim();
         }
-
-        // Parse the token and return the subject (userId)
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key) // Use the same key as in generateToken
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-
-        return claims.getSubject(); // Extract the subject (userId)
+        return extractClaims(token).getSubject(); // Extract the subject (userId)
     }
 
     public static String extractRole(String token) {
