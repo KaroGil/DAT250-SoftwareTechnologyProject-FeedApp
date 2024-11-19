@@ -36,14 +36,13 @@ async function fetchPolls() {
 }
 
 async function vote(pollid, optionid){
-  const userid = 0;
   const body = {
     voteOptionId: optionid,
     pollId: pollid
   };
 
   try{
-    const response = await defaultFetch('/votes', 'POST', getUserToken(), body)
+   await defaultFetch('/votes', 'POST', getUserToken(), body)
   }catch (error) {
     console.error('Error:', error)
   }

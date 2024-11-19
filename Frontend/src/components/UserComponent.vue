@@ -27,18 +27,6 @@ async function fetchUsers() {
   }
 }
 
-// Delete a user -> not in use as for now
-async function deleteUser(id: number) {
-  try {
-    await defaultFetch(`/users/${id}`, 'DELETE')
-    users.value = users.value.filter(user => user.id !== id)
-    deleteUserToken()
-    location.reload()
-  } catch (error) {
-    console.error('Error:', error)
-  }
-}
-
 // Call the fetchUsers function when the component is mounted
 fetchUsers()
 </script>

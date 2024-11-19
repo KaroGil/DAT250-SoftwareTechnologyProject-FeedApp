@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import {defaultFetch} from "@/utils/defaultFetch";
 import {getUserToken} from "@/utils/sessionStorageUtil";
 
-const showPollForm = ref(false)
 const pollQuestion = ref('')
 const pollOptions = ref('')
 const validUntil = ref('');
