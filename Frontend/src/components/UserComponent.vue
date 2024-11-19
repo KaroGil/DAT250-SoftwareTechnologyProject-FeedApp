@@ -2,7 +2,6 @@
 // Get users
 import { ref } from 'vue'
 import { defaultFetch } from '@/utils/defaultFetch'
-import { deleteUserToken } from '@/utils/sessionStorageUtil'
 
 interface User {
   id: number
