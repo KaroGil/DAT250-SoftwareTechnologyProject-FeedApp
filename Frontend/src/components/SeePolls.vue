@@ -35,7 +35,7 @@ async function fetchPolls() {
   }
 }
 
-async function vote(pollid, optionid) {
+async function vote(pollid: string, optionid: string) {
   const body = {
     voteOptionId: optionid,
     pollId: pollid,
@@ -63,7 +63,7 @@ fetchPolls()
             {{ poll.question }}
           </li>
           <div v-for="option in poll.options" :key="option.caption">
-            <button @click="vote(poll.id, option.id)">
+            <button @click="vote(poll.id, option.caption)">
               {{ option.caption }}
             </button>
           </div>

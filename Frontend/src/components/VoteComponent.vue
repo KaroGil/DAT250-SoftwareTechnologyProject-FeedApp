@@ -1,9 +1,29 @@
 <script setup lang="ts">
 import { defaultFetch } from '@/utils/defaultFetch'
 import { ref, computed } from 'vue'
+interface Vote {
+  pollid: number
+  voteOptionId: number
+}
 
-const votes = ref<User[]>([])
-const polls = ref<User[]>([])
+interface Poll {
+  id: number
+  creatorUserID: string
+  question: string
+  publishedAt: string
+  validUntil: string
+  options: VoteOption[]
+  isPublic: boolean
+}
+
+interface VoteOption {
+  id: number
+  caption: string
+  presentationOrder: number
+}
+
+const votes = ref<Vote[]>([])
+const polls = ref<Poll[]>([])
 const loading = ref(true)
 
 async function fetchVotes() {
@@ -33,11 +53,11 @@ async function fetchPolls() {
 const mappedVotes = computed(() => {
   return votes.value.map(vote => {
     // Find the poll corresponding to the vote
-    const poll = polls.value.find(p => p.id === vote.pollId)
+    const poll = polls.value.find(p => p.id === vote.pollid)
 
     // Find the vote option corresponding to the vote
     const voteOption = poll?.options.find(
-      option => option.id === vote.voteOptionId,
+      option => option?.id === vote.voteOptionId,
     )
 
     return {
@@ -60,7 +80,7 @@ fetchVotes()
         <h2>Vote</h2>
         <p v-if="loading">Loading users...</p>
         <ul v-else>
-          <li v-for="vote in mappedVotes" :key="vote.id">
+          <li v-for="vote in mappedVotes" :key="vote.pollName">
             Poll: {{ vote.pollName }} | Answer: {{ vote.voteOptionCaption }}
           </li>
         </ul>
