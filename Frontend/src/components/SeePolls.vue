@@ -35,15 +35,15 @@ async function fetchPolls() {
   }
 }
 
-async function vote(pollid, optionid){
+async function vote(pollid, optionid) {
   const body = {
     voteOptionId: optionid,
-    pollId: pollid
-  };
+    pollId: pollid,
+  }
 
-  try{
-   await defaultFetch('/votes', 'POST', getUserToken(), body)
-  }catch (error) {
+  try {
+    await defaultFetch('/votes', 'POST', getUserToken(), body)
+  } catch (error) {
     console.error('Error:', error)
   }
 }

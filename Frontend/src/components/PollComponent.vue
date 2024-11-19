@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import {defaultFetch} from "@/utils/defaultFetch";
-import {getUserToken} from "@/utils/sessionStorageUtil";
+import { defaultFetch } from '@/utils/defaultFetch'
+import { getUserToken } from '@/utils/sessionStorageUtil'
 
 const pollQuestion = ref('')
 const pollOptions = ref('')
-const validUntil = ref('');
-const isPublic = ref(false);
-const minDateTime = ref(new Date().toISOString().slice(0, 16));
+const validUntil = ref('')
+const isPublic = ref(false)
+const minDateTime = ref(new Date().toISOString().slice(0, 16))
 
 const createPoll = async () => {
   const body = {
     question: pollQuestion.value,
-    options: pollOptions.value.split(',').map((option,ind) =>({
+    options: pollOptions.value.split(',').map((option, ind) => ({
       caption: option.trim(),
       presentationOrder: ind,
     })),
     validUntil: validUntil.value ? new Date(validUntil.value) : null,
     isPublic: isPublic.value,
-  };
+  }
 
-  try{
-    const response = defaultFetch('/polls', 'POST', getUserToken(),body);
-    console.log(response);
-  }catch(error){
-    console.error('Error creating poll:', error);
+  try {
+    const response = defaultFetch('/polls', 'POST', getUserToken(), body)
+    console.log(response)
+  } catch (error) {
+    console.error('Error creating poll:', error)
   }
 }
 </script>
@@ -36,15 +36,19 @@ const createPoll = async () => {
       <h2>Create a New Poll</h2>
       <label>
         Poll Question:
-        <input v-model="pollQuestion" type="text" placeholder="Question...?"/>
+        <input v-model="pollQuestion" type="text" placeholder="Question...?" />
       </label>
       <label>
         Options (comma separated):
-        <input v-model="pollOptions" type="text" placeholder="Option 1, Option 2, Option 3"/>
+        <input
+          v-model="pollOptions"
+          type="text"
+          placeholder="Option 1, Option 2, Option 3"
+        />
       </label>
       <label>
-       Valid Until:
-        <input v-model="validUntil" type="datetime-local" :min="minDateTime"/>
+        Valid Until:
+        <input v-model="validUntil" type="datetime-local" :min="minDateTime" />
       </label>
       <label>
         Public poll

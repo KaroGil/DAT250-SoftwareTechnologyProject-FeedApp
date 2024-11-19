@@ -38,9 +38,7 @@ fetchUsers()
         <h2>All users</h2>
         <p v-if="loading">Loading users...</p>
         <ul v-else v-for="user in users" :key="user.id">
-          <li>
-            {{ user.name }} ({{ user.email }})
-          </li>
+          <li>{{ user.name }} ({{ user.email }})</li>
         </ul>
       </div>
     </div>
