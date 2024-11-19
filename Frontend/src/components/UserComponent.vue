@@ -27,7 +27,7 @@ async function fetchUsers() {
   }
 }
 
-// Delete a user
+// Delete a user -> not in use as for now
 async function deleteUser(id: number) {
   try {
     await defaultFetch(`/users/${id}`, 'DELETE')
@@ -53,7 +53,6 @@ fetchUsers()
         <ul v-else v-for="user in users" :key="user.id">
           <li>
             {{ user.name }} ({{ user.email }})
-            <button @click="deleteUser(user.id)">Delete</button>
           </li>
         </ul>
       </div>

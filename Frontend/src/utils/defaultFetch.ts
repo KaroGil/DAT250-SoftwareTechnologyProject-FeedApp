@@ -9,13 +9,13 @@ export const defaultFetch = async (
     method: method,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      'Authorization': `Bearer ${token?.trim()}`,
     },
     body: JSON.stringify(body),
   })
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+    throw new Error(`HTTP error! status: ${response.status}, port: http://localhost:8080/api${url}`)
   }
 
   const contentType = response.headers.get('Content-Type')

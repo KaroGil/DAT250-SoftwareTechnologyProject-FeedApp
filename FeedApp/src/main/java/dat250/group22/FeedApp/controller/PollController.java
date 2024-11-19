@@ -3,6 +3,10 @@ package dat250.group22.FeedApp.controller;
 
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.Poll;
+import dat250.group22.FeedApp.util.JWTUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +19,7 @@ import java.time.Instant;
 @CrossOrigin
 @RequestMapping("/api/polls")
 public class PollController {
+    private static final Logger logger = LoggerFactory.getLogger(PollController.class);
 
     private final DomainManager manager;
 
@@ -22,8 +27,16 @@ public class PollController {
     public PollController(DomainManager manager){ this.manager = manager; }
 
     @PostMapping
-    public ResponseEntity<String> createPoll(@RequestBody Poll poll) {
+    public ResponseEntity<String> createPoll( @RequestHeader("Authorization") String token, @RequestBody Poll poll) {
         try {
+            logger.info("Received Authorization header: {}", token);
+            String jwt = token.replace("Bearer ", "").trim();
+            logger.info("JWT extracted: {}", jwt);
+            JWTUtil.testJWT();
+            UUID userId = UUID.fromString(JWTUtil.getUser(jwt));
+            logger.info("UserId from token: {}", userId);
+            poll.setCreatorUserID(userId);
+
             poll.setPublishedAt(Instant.now());
             manager.addPoll(poll);
             return ResponseEntity.status(HttpStatus.CREATED).build();

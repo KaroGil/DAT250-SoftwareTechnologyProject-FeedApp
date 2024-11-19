@@ -66,7 +66,7 @@ public class UserController {
         logger.info("user found: {}", userFound.getEmail());
 
         // Create JWT token for the logged in user
-        String token = JWTUtil.generateToken(userFound.getEmail(), "USER");
+        String token = JWTUtil.generateToken(userFound.getId(), "USER");
         return ResponseEntity.ok(Collections.singletonMap("token", token));
     }
 }
