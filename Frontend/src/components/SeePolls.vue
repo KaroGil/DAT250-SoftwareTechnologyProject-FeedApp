@@ -15,8 +15,8 @@ interface Poll {
 }
 
 interface VoteOption {
-  text: string // The text for the vote option
-  // Add any additional fields for VoteOption if necessary
+  caption: string
+  presentationOrder: number
 }
 
 const polls = ref<Poll[]>([])
@@ -35,6 +35,19 @@ async function fetchPolls() {
   }
 }
 
+async function vote(pollid: string, optionid: string) {
+  const body = {
+    voteOptionId: optionid,
+    pollId: pollid,
+  }
+
+  try {
+    await defaultFetch('/votes', 'POST', getUserToken(), body)
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
 // Call the fetchUsers function when the component is mounted
 fetchPolls()
 </script>
@@ -42,7 +55,6 @@ fetchPolls()
 <template>
   <main>
     <div>
-      <!-- Poll creation form -->
       <div class="modal">
         <h2>All Polls</h2>
         <p v-if="loading">Loading polls...</p>
@@ -50,9 +62,9 @@ fetchPolls()
           <li>
             {{ poll.question }}
           </li>
-          <div v-for="option in poll.options" :key="option.text">
-            <button>
-              {{ option.text }}
+          <div v-for="option in poll.options" :key="option.caption">
+            <button @click="vote(poll.id, option.caption)">
+              {{ option.caption }}
             </button>
           </div>
         </ul>

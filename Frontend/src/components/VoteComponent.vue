@@ -1,4 +1,76 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { defaultFetch } from '@/utils/defaultFetch'
+import { ref, computed } from 'vue'
+interface Vote {
+  pollid: number
+  voteOptionId: number
+}
+
+interface Poll {
+  id: number
+  creatorUserID: string
+  question: string
+  publishedAt: string
+  validUntil: string
+  options: VoteOption[]
+  isPublic: boolean
+}
+
+interface VoteOption {
+  id: number
+  caption: string
+  presentationOrder: number
+}
+
+const votes = ref<Vote[]>([])
+const polls = ref<Poll[]>([])
+const loading = ref(true)
+
+async function fetchVotes() {
+  try {
+    const response = await defaultFetch('/votes', 'GET')
+    votes.value = await response
+    console.log('votes: ', votes)
+  } catch (error) {
+    console.error('Error:', error)
+    alert('An error occurred. Please try again.')
+  } finally {
+    loading.value = false
+  }
+}
+
+async function fetchPolls() {
+  try {
+    const response = await defaultFetch('/polls', 'GET')
+    polls.value = await response
+    console.log('polls: ', votes)
+  } catch (error) {
+    console.error('Error:', error)
+    alert('An error occurred. Please try again.')
+  }
+}
+
+const mappedVotes = computed(() => {
+  return votes.value.map(vote => {
+    // Find the poll corresponding to the vote
+    const poll = polls.value.find(p => p.id === vote.pollid)
+
+    // Find the vote option corresponding to the vote
+    const voteOption = poll?.options.find(
+      option => option?.id === vote.voteOptionId,
+    )
+
+    return {
+      ...vote,
+      pollName: poll?.question || 'Unknown Poll',
+      voteOptionCaption: voteOption?.caption || 'Unknown Option',
+    }
+  })
+})
+
+fetchPolls()
+fetchVotes()
+</script>
 
 <template>
   <main>
@@ -6,6 +78,12 @@
       <!-- Poll creation form -->
       <div class="modal">
         <h2>Vote</h2>
+        <p v-if="loading">Loading users...</p>
+        <ul v-else>
+          <li v-for="vote in mappedVotes" :key="vote.pollName">
+            Poll: {{ vote.pollName }} | Answer: {{ vote.voteOptionCaption }}
+          </li>
+        </ul>
       </div>
     </div>
   </main>
