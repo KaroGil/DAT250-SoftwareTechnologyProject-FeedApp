@@ -21,9 +21,10 @@ FeedApp developed in these technologies:
 
 ## Run Dockerized Application 
 Start Docker Desktop
-> docker build -t feedapp-image1.5 .
-> 
-> docker run -d --name feedapp-backend -p 8080:8080 feedapp-image1.5:latest
+```shell
+docker build -t feedapp-image1.5 .
+docker run -d --name feedapp-backend -p 8080:8080 feedapp-image1.5:latest
+```
 
 #### Docker commands:
 ```shell
