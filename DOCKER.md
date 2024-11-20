@@ -4,7 +4,7 @@ First of all, make sure to have `Docker Desktop` running.
 ## Test RabbitMQ Locally
 Start RabbitMQ with Docker by opening a new terminal and running the following command to start a RabbitMQ
 container with the management plugin enabled:
-> docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+> docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:4.0.1-management
 
 ``` 
 -d:                     Run the container in detached mode (in the background).
@@ -42,8 +42,8 @@ EXPOSE 8080
 CMD ["java","-jar","feedapp-docker.jar"]
 ```
 
-Build the image with the command: `docker build -t feedapp-image1.3 .`
-Run a container with the command: `docker run -d --name feedapp-backend -p 8080:8080 feedapp-image1.3:latest`
+Build the image with the command: `docker build -t feedapp-image1.5 .`
+Run a container with the command: `docker run -d --name feedapp-backend -p 8080:8080 feedapp-image1.5:latest`
 Then try to test it through Postman.
 
 ## Using docker-compose To Build The Application With RabbitMQ
@@ -57,7 +57,7 @@ services:
       # Path to backend service
       context: ./FeedApp
     # Specify image- and container names for the feedapp service
-    image: feedapp-image1.3:latest
+    image: feedapp-image1.4:latest
     # Ensures that RabbitMQ is started and working before the backend
     depends_on:
       - rabbitmq
@@ -82,6 +82,7 @@ $ docker ps                       # List running containers
 $ docker-compose up --build       # Run the Dockerized application and its dependencies
 $ docker-compose down             # Shut down the Dockerized application and its dependencies
 $ docker-compose restart feedapp  # Restart the Dockerized application without shutting down
+$ docker stop dat250-softwaretechnologyproject-feedapp     # Stop the container
 
 # Run the following commands in separate terminals to view logs while docker-compose is running
 $ docker-compose logs -f feedapp  # Get logs for the application 
@@ -89,5 +90,9 @@ $ docker-compose logs -f rabbitmq # Get logs for RabbitMQ
 $ docker-compose logs -f mongodb  # Get logs for MongoDB 
 ```
 
+## Test H2 Database Locally
+`docker run --name feedapp-h2 -d buildo/h2database`
+`docker run --name feedapp-h2 -p 8081:8081 -d buildo/h2database`
+`docker run -e DATABASE_SERVER=jdbc:h2:mem:./fullstack_db -dp 8080:8080 feedapp-image1.4`
 
 ## Test MongoDB Locally

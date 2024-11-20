@@ -6,7 +6,7 @@ services:
       # Path to backend service
       context: ./FeedApp
     # Specify image- and container names for the feedapp service
-    image: feedapp-image1.3:latest
+    image: feedapp-image1.5:latest
     # Ensures that RabbitMQ is started and working before the backend
     depends_on:
       - rabbitmq
