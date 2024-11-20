@@ -27,6 +27,6 @@ public class Poll implements java.io.Serializable {
 
     // Many-to-One relationship with User (creator of the poll)
     @ManyToOne
-    @JoinColumn(name = "creator_user_id")  // Foreign key for the creator (no need for insertable=false, updatable=false unless needed)
+    @JoinColumn(name = "creator_user_id")  // Foreign key for the creator
     private User creatorUser;
 }

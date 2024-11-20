@@ -22,7 +22,7 @@ wait_for() {
 # Wait for both services in parallel
 (
   wait_for "rabbitmq" "5672" "RabbitMQ" &
-  wait_for "mongodb" "27017" "MongoDB" &
+#  wait_for "mongodb" "27017" "MongoDB" &
   wait
 )
 
