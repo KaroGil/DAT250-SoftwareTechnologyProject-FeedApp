@@ -12,7 +12,3 @@ EXPOSE 8080
 
 # Run the JAR file to build the image of the app
 CMD ["java","-jar","feedapp-docker.jar"]
-
-
-# Run the JAR file when the container starts
-#ENTRYPOINT ["java", "-cp", "feedapp-docker.jar", "FeedAppApplication"]
