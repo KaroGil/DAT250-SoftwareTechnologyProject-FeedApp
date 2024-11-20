@@ -1,43 +1,25 @@
+x-project:
+  name: feedapp_project
 services:
+  feedapp:
+    build:
+      # Path to backend service
+      context: ./FeedApp
+    # Specify image- and container names for the feedapp service
+    image: feedapp-image1.3:latest
+    # Ensures that RabbitMQ is started and working before the backend
+    depends_on:
+      - rabbitmq
+    ports:
+      # Expose the backend on port 8080
+      - "8080:8080"
+
   rabbitmq:
     image: rabbitmq:4.0.1-management
-    container_name: rabbitmq-feedapp
+    container_name: feedapp-rabbit-docker
     ports:
       - "5672:5672"    # RabbitMQ port
       - "15672:15672"  # RabbitMQ management UI on port 15672
     environment:
-      RABBITMQ_DEFAULT_USER: rabbitmq_admin
-      RABBITMQ_DEFAULT_PASS: rabbitmq_admin
-    networks:
-      - feedapp-network  # Connect to the 'feedapp-network'
-
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb-feedapp
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: mongodb_admin
-      MONGO_INITDB_ROOT_PASSWORD: mongodb_admin
-      MONGO_INITDB_DATABASE: feedapp_mongodb
-    ports:
-      - "27017:27017"  # Expose MongoDB on port 27017
-    networks:
-      - feedapp-network  # Connect to the 'feedapp-network'
-
-  feedapp:
-    build:
-      context: ./FeedApp  # Path to backend service
-    image: dat250-feedapp:latest  # Specify image name for the feedapp service
-    container_name: feedapp-container
-    ports:
-      - "8080:8080"  # Expose the backend on port 8080
-    depends_on:
-      - mongodb      # Ensures that MongoDB is started before the backend
-      - rabbitmq     # Ensures that RabbitMQ is started before the backend
-    command: ["java", "-jar", "feedapp-docker.jar"]
-    # Make sure the JAR file path is correct
-    networks:
-      - feedapp-network  # Connect to the 'feedapp-network'
-
-networks:
-  feedapp-network:
-    driver: bridge  # Use the bridge driver for inter-service communication
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest

@@ -1,7 +1,7 @@
 ### H2 Database Set-Up
 
 Added the `H2` dependency by adding the dependencies to the `build.gradle.kts` file:
-``` 
+```kotlin
 implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
 implementation("jakarta.transaction:jakarta.transaction-api")
@@ -11,7 +11,7 @@ runtimeOnly("com.h2database:h2")
 ```
 
 And I modified `applications.properties` by adding the configurations for H2.
-```  
+```properties
 spring.application.name=FeedApp
 
 # H2 configurations
@@ -25,7 +25,7 @@ spring.jpa.hibernate.ddl-auto=update
 # Use persistent H2 database instead of an in-memory
 spring.datasource.url=jdbc:h2:mem:fullstack_db
 
-# Make sure the database matches the entity definitions (generates ID automatically and other fields not specified)
+# Hibernate implementation
 hibernate.hbm2ddl.auto=validate
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
 
@@ -33,20 +33,21 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
 logging.level.org.hibernate.SQL=DEBUG
 logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 ```
-I opted to use Spring Data JPA as it is useful for creating applications with databases like H2 (a relational database) 
-because it simplifies database access by providing an easy way to interact with relational databases using 
-Java Persistence API (JPA).
+We opted to use `Spring Data JPA` as it is useful for creating applications with databases like H2 (a relational 
+database) because it simplifies database access by providing an easy way to interact with relational databases using 
+`Java Persistence API` (JPA).
 
-I also had to make som adjustments to the `User()`-class since "User" is a reserved term for SQL. And I modified the
-other classes so `Lombok` can remove boilerplate code. 
+We also had to make som adjustments to the `User()`-class since "User" is a reserved term for SQL. And we modified the
+other classes to `Lombok` to remove boilerplate code. 
 
-The `Lombok` `@Data` annotation, it will automatically generate getters, setters, equals(), hashCode(), and a constructor.
-This satisfies the requirement for an empty constructor. This means that we do not have to worry about making the 
-methods or constructors for the models because `Lombok` does it for us. 
+The `Lombok` `@Data` annotation, it will automatically generate getters, setters, equals(), hashCode(), and a 
+constructor. This satisfies the requirement for an empty constructor. This means that we do not have to worry about 
+making the methods or constructors for the models because `Lombok` does it for us. 
 
-The `@Entity` annotation tells JPA that this class represents a persistent entity that can be mapped to a database table.
+The `@Entity` annotation tells JPA that this class represents a persistent entity that can be mapped to a database 
+table.
 
-Then I connected to the database inside `IntelliJ` by running the application and adding the data with the login: 
+Then we connected to the database inside `IntelliJ` by running the application and adding the data with the login: 
 ```
 Name:           fullstack_db
 Authentication: User & Password
