@@ -7,6 +7,7 @@ pnpm-debug.log*
 lerna-debug.log*
 node_modules
 .DS_Store
+fullstack_db.mv.db
 dist
 build/
 .gradle/

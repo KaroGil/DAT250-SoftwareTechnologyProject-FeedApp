@@ -2,7 +2,6 @@
 // Get users
 import { ref } from 'vue'
 import { defaultFetch } from '@/utils/defaultFetch'
-import { deleteUserToken } from '@/utils/sessionStorageUtil'
 
 interface User {
   id: number
@@ -27,18 +26,6 @@ async function fetchUsers() {
   }
 }
 
-// Delete a user
-async function deleteUser(id: number) {
-  try {
-    await defaultFetch(`/users/${id}`, 'DELETE')
-    users.value = users.value.filter(user => user.id !== id)
-    deleteUserToken()
-    location.reload()
-  } catch (error) {
-    console.error('Error:', error)
-  }
-}
-
 // Call the fetchUsers function when the component is mounted
 fetchUsers()
 </script>
@@ -51,10 +38,7 @@ fetchUsers()
         <h2>All users</h2>
         <p v-if="loading">Loading users...</p>
         <ul v-else v-for="user in users" :key="user.id">
-          <li>
-            {{ user.name }} ({{ user.email }})
-            <button @click="deleteUser(user.id)">Delete</button>
-          </li>
+          <li>{{ user.name }} ({{ user.email }})</li>
         </ul>
       </div>
     </div>
