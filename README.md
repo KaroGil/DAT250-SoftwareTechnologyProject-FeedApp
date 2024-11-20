@@ -15,9 +15,12 @@ FeedApp developed in these technologies:
 ---
 
 ## Run Locally 
-> ./gradlew clean build
-> 
-> ./gradlew bootRun
+Run RabbitMQ container, then build project and run it
+```
+docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:4.0.1-management
+./gradlew clean build
+./gradlew bootRun
+```
 
 ## Run Dockerized Application 
 Start Docker Desktop
