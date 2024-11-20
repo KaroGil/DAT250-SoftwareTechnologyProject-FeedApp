@@ -26,7 +26,7 @@ public class Poll implements java.io.Serializable {
     private Set<VoteOption> options = new HashSet<>();
 
     // Many-to-One relationship with User (creator of the poll)
-    @ManyToOne
+//    @ManyToOne
     @JoinColumn(name = "creator_user_id")  // Foreign key for the creator
-    private User creatorUser;
+    private UUID creatorUserId;
 }

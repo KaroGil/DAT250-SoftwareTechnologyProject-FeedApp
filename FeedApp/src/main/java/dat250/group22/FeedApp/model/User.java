@@ -20,6 +20,6 @@ public class User {
     private String password;
 
     // One-to-Many relationship with Poll
-    @OneToMany(mappedBy = "creatorUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "creatorUserId", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Poll> polls = new HashSet<>();
 }
