@@ -3,24 +3,26 @@
     import { defaultFetch } from '../utils/defaultFetch';
     import { getUserToken } from '../utils/sessionStorageUtil';
     import { writable } from 'svelte/store';
+    import SeePolls from "./SeePolls.svelte";
 
     const pollQuestion = writable('');
     const pollOptions = writable('');
     const validUntil = writable('');
     const isPublic = writable(false);
     const minDateTime = writable('');
-    // Dette er ubrukt kode
-    export const unusedFunction = () => console.log("Dette brukes ikke");
-    export const unusedFunction2 = () => console.log("Dette brukes ikke");
-    export const unusedFunction3 = () => console.log("Dette brukes ikke");
-    export const unusedFunction4 = () => console.log("Dette brukes ikke");
-    export const unusedFunction5 = () => console.log("Dette brukes ikke");
-    export const unusedFunction6 = () => console.log("Dette brukes ikke");
-    export const unusedFunction7 = () => console.log("Dette brukes ikke");
-    export const unusedFunction8 = () => console.log("Dette brukes ikke");
-    export const unusedFunction9 = () => console.log("Dette brukes ikke");
 
-
+    export let items = [
+        { id: 1, title: "Poll 1", description: "This is the first poll.", votes: 10 },
+        { id: 2, title: "Poll 2", description: "This is the second poll.", votes: 15 },
+        { id: 3, title: "Poll 3", description: "This is the third poll.", votes: 8 },
+        { id: 4, title: "Poll 4", description: "This is the fourth poll.", votes: 20 },
+        { id: 5, title: "Poll 5", description: "This is the fifth poll.", votes: 5 },
+        { id: 6, title: "Poll 6", description: "This is the sixth poll.", votes: 12 },
+        { id: 7, title: "Poll 7", description: "This is the seventh poll.", votes: 30 },
+        { id: 8, title: "Poll 8", description: "This is the eighth poll.", votes: 25 },
+        { id: 9, title: "Poll 9", description: "This is the ninth poll.", votes: 18 },
+        { id: 10, title: "Poll 10", description: "This is the tenth poll.", votes: 22 },
+    ];
 
     onMount(() => {
         minDateTime.set(new Date().toISOString().slice(0, 16));
@@ -72,6 +74,11 @@
             <input bind:checked={$isPublic} type="checkbox" />
         </label>
         <button on:click={createPoll}>Submit</button>
+    </div>
+    <div>
+        {#each items as item}
+            <SeePolls {item} />
+        {/each}
     </div>
 </div>
 

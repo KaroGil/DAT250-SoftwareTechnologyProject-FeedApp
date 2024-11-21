@@ -3,6 +3,8 @@
     import { writable } from 'svelte/store';
     import { defaultFetch } from '../utils/defaultFetch';
     import { getUserToken } from '../utils/sessionStorageUtil';
+    export let item: {     id: number;     title: string;     description: string;     votes: number; };
+
 
     interface Poll {
         id: string; // UUID generated for the poll
