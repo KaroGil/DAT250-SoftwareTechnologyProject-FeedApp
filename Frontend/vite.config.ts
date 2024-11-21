@@ -9,7 +9,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 export default defineConfig({
   plugins: [
     vue(),
-    visualizer()
+    visualizer({ open: true })
   ],
   resolve: {
     alias: {
