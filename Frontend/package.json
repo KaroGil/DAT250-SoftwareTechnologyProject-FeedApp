@@ -12,9 +12,10 @@
     "type-check": "vue-tsc --build --force",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "prettier":  "prettier --check src/"
+    "prettier": "prettier --check src/"
   },
   "dependencies": {
+    "svelte": "^5.2.7",
     "vue": "^3.5.12"
   },
   "devDependencies": {

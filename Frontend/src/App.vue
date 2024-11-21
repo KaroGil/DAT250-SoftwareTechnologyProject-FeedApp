@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import PollComponent from './components/PollComponent.vue'
-import UserComponent from '@/components/UserComponent.vue'
+import UserComponent from '@/components/UserComponent.svelte'
 import VoteComponent from '@/components/VoteComponent.vue'
-import Login from '@/components/UserLogin.vue'
-import SeePolls from '@/components/SeePolls.vue'
+import Login from '@/components/UserLogin.svelte'
+import SeePolls from '@/components/SeePolls.svelte'
 import { deleteUserToken, getUserToken } from '@/utils/sessionStorageUtil'
-import CreateUser from '@/components/CreateUser.vue'
+import CreateUser from '@/components/CreateUser.svelte'
 
 const currentView = ref('login') // login as default to make sure the user logs in
 const changeView = (view: string) => {
