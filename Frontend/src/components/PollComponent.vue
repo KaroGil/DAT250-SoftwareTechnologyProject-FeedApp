@@ -20,6 +20,17 @@ const createPoll = async () => {
     isPublic: isPublic.value,
   }
 
+  const unusedFunction1 = () => console.log("Dette brukes ikke");
+  const unusedFunction2 = () => console.log("Dette brukes ikke");
+  const unusedFunction3 = () => console.log("Dette brukes ikke");
+  const unusedFunction4 = () => console.log("Dette brukes ikke");
+  const unusedFunction5 = () => console.log("Dette brukes ikke");
+  const unusedFunction6 = () => console.log("Dette brukes ikke");
+  const unusedFunction7 = () => console.log("Dette brukes ikke");
+  const unusedFunction8 = () => console.log("Dette brukes ikke");
+  const unusedFunction9 = () => console.log("Dette brukes ikke");
+
+
   try {
     const response = defaultFetch('/polls', 'POST', getUserToken(), body)
     console.log(response)
