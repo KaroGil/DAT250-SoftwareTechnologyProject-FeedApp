@@ -1,71 +1,79 @@
-<script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import PollComponent from './components/PollComponent.vue'
-import UserComponent from '@/components/UserComponent.vue'
-import VoteComponent from '@/components/VoteComponent.vue'
-import Login from '@/components/UserLogin.vue'
-import SeePolls from '@/components/SeePolls.vue'
-import { deleteUserToken, getUserToken } from '@/utils/sessionStorageUtil'
-import CreateUser from '@/components/CreateUser.vue'
+<script lang="ts">
+import { writable, onMount } from 'svelte/store';
+import PollComponent from './components/PollComponent.svelte';
+import UserComponent from '@/components/UserComponent.svelte';
+import VoteComponent from '@/components/VoteComponent.svelte';
+import Login from '@/components/UserLogin.svelte';
+import SeePolls from '@/components/SeePolls.svelte';
+import { deleteUserToken, getUserToken } from '@/utils/sessionStorageUtil';
+import CreateUser from '@/components/CreateUser.svelte';
 
-const currentView = ref('login') // login as default to make sure the user logs in
-const changeView = (view: string) => {
-  currentView.value = view
+const currentView = writable('login'); // Default view to ensure user logs in
+const isLoggedIn = writable(false); // Tracks if the user is logged in
+
+function changeView(view: string) {
+  currentView.set(view);
 }
-
-const isLoggedIn = ref(false) // Tracks if the user is logged in
-
-// Check if a user token exists in sessionStorage or localStorage to set login status
-onMounted(() => {
-  isLoggedIn.value = Boolean(getUserToken())
-  if (isLoggedIn.value) {
-    changeView('seePoll')
-  }
-})
 
 function logout() {
   // Remove the token and update login status
-  changeView('login')
-  deleteUserToken()
-  isLoggedIn.value = false
+  changeView('login');
+  deleteUserToken();
+  isLoggedIn.set(false);
 }
+
+onMount(() => {
+  isLoggedIn.set(Boolean(getUserToken()));
+  if (getUserToken()) {
+    changeView('seePoll');
+  }
+});
 </script>
 
-<template>
-  <header>
-    <h1>Feed App</h1>
-    <div class="wrapper">
-      <p>
-        Best group ever == group22 == {names: [Kaja, Karolina, Mina, Mampenda]}
-      </p>
-    </div>
-  </header>
+<header>
+<h1>Feed App</h1>
+<div class="wrapper">
+  <p>
+    Best group ever == group22 == {names: [Kaja, Karolina, Mina, Mampenda]}
+  </p>
+</div>
+</header>
 
-  <main class="navbar">
-    <button v-if="!isLoggedIn" @click="changeView('login')">Login</button>
-    <button v-if="!isLoggedIn" @click="changeView('createUser')">
-      Create User
-    </button>
-    <button v-if="isLoggedIn" @click="logout()">Logout</button>
-    <button @click="changeView('seePoll')">See Polls</button>
-    <!--    Only visable if user logged in-->
-    <button v-if="isLoggedIn" @click="changeView('addPoll')">Add Poll</button>
-    <button v-if="isLoggedIn" @click="changeView('vote')">Vote</button>
-    <button v-if="isLoggedIn" @click="changeView('seeUsers')">See Users</button>
-  </main>
+<main class="navbar">
+{#if !$isLoggedIn}
+<button on:click={() => changeView('login')}>Login</button>
+<button on:click={() => changeView('createUser')}>Create User</button>
+{:else}
+<button on:click={logout}>Logout</button>
+<button on:click={() => changeView('addPoll')}>Add Poll</button>
+<button on:click={() => changeView('vote')}>Vote</button>
+<button on:click={() => changeView('seeUsers')}>See Users</button>
+{/if}
+<button on:click={() => changeView('seePoll')}>See Polls</button>
+</main>
 
-  <section>
-    <Login v-if="currentView === 'login'" />
-    <CreateUser v-if="currentView === 'createUser'" />
-    <SeePolls v-if="currentView === 'seePoll'" />
-    <!--    Only visable if user logged in-->
-    <UserComponent v-if="isLoggedIn && currentView === 'seeUsers'" />
-    <PollComponent v-if="isLoggedIn && currentView === 'addPoll'" />
-    <VoteComponent v-if="isLoggedIn && currentView === 'vote'" />
-  </section>
-</template>
+<section>
+{#if $currentView === 'login'}
+<Login />
+{/if}
+{#if $currentView === 'createUser'}
+<CreateUser />
+{/if}
+{#if $currentView === 'seePoll'}
+<SeePolls />
+{/if}
+{#if $isLoggedIn && $currentView === 'seeUsers'}
+<UserComponent />
+{/if}
+{#if $isLoggedIn && $currentView === 'addPoll'}
+<PollComponent />
+{/if}
+{#if $isLoggedIn && $currentView === 'vote'}
+<VoteComponent />
+{/if}
+</section>
 
-<style scoped>
+<style>
 /* Make the navbar horizontal */
 .navbar {
   display: flex;
