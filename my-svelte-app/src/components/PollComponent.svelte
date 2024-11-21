@@ -9,6 +9,18 @@
     const validUntil = writable('');
     const isPublic = writable(false);
     const minDateTime = writable('');
+    // Dette er ubrukt kode
+    export const unusedFunction = () => console.log("Dette brukes ikke");
+    export const unusedFunction2 = () => console.log("Dette brukes ikke");
+    export const unusedFunction3 = () => console.log("Dette brukes ikke");
+    export const unusedFunction4 = () => console.log("Dette brukes ikke");
+    export const unusedFunction5 = () => console.log("Dette brukes ikke");
+    export const unusedFunction6 = () => console.log("Dette brukes ikke");
+    export const unusedFunction7 = () => console.log("Dette brukes ikke");
+    export const unusedFunction8 = () => console.log("Dette brukes ikke");
+    export const unusedFunction9 = () => console.log("Dette brukes ikke");
+
+
 
     onMount(() => {
         minDateTime.set(new Date().toISOString().slice(0, 16));
