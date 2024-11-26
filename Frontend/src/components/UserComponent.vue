@@ -2,7 +2,7 @@
 // Get users
 import { ref } from 'vue'
 import { defaultFetch } from '@/utils/defaultFetch'
-import {getUserToken} from "@/utils/sessionStorageUtil";
+import { getUserToken } from '@/utils/sessionStorageUtil'
 
 interface User {
   id: number
@@ -16,10 +16,10 @@ const error = ref<string | null>(null)
 
 // Fetch all users
 async function fetchCurrentUser() {
-  const token = getUserToken();
+  const token = getUserToken()
 
-  if(!token){
-    error.value = "No user is logged in."
+  if (!token) {
+    error.value = 'No user is logged in.'
     loading.value = false
     return
   }
@@ -30,7 +30,7 @@ async function fetchCurrentUser() {
     console.log('users: ', user)
   } catch (error) {
     console.error('Error:', error)
-    error.value = "An error occurred. Please try again."
+    error.value = 'An error occurred. Please try again.'
   } finally {
     loading.value = false
   }
@@ -45,12 +45,12 @@ fetchCurrentUser()
     <div>
       <!-- Poll creation form -->
       <div class="modal">
-        <h2>All users</h2>
+        <h2>Your profile</h2>
         <p v-if="loading">Loading users...</p>
         <p v-if="error">{{ error }}</p>
         <div v-if="!loading && !error && user">
-           <p><strong>Name:</strong> {{ user.name }}</p>
-           <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Name:</strong> {{ user.name }}</p>
+          <p><strong>Email:</strong> {{ user.email }}</p>
         </div>
         <p v-if="!loading && !error && !user">No user data found.</p>
       </div>

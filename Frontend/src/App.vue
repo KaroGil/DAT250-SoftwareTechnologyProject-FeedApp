@@ -51,7 +51,7 @@ function logout() {
     <!--    Only visable if user logged in-->
     <button v-if="isLoggedIn" @click="changeView('addPoll')">Add Poll</button>
     <button v-if="isLoggedIn" @click="changeView('vote')">Vote</button>
-    <button v-if="isLoggedIn" @click="changeView('seeUsers')">See Users</button>
+    <button v-if="isLoggedIn" @click="changeView('seeUser')">Profile</button>
   </main>
 
   <section>
@@ -59,7 +59,7 @@ function logout() {
     <CreateUser v-if="currentView === 'createUser'" />
     <SeePolls v-if="currentView === 'seePoll'" />
     <!--    Only visable if user logged in-->
-    <UserComponent v-if="isLoggedIn && currentView === 'seeUsers'" />
+    <UserComponent v-if="isLoggedIn && currentView === 'seeUser'" />
     <PollComponent v-if="isLoggedIn && currentView === 'addPoll'" />
     <VoteComponent v-if="isLoggedIn && currentView === 'vote'" />
   </section>

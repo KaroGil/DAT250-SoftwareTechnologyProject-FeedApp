@@ -27,7 +27,7 @@ interface VoteOption {
 
 const polls = ref<Poll[]>([])
 const loading = ref(true)
-const pollOwners = ref<Record<string, User | null>>({});
+const pollOwners = ref<Record<string, User | null>>({})
 
 // Fetch all polls
 async function fetchPolls() {
@@ -36,7 +36,7 @@ async function fetchPolls() {
     const response = await defaultFetch('/polls', 'GET', token)
     polls.value = await response
 
-    await fetchPollOwners();
+    await fetchPollOwners()
   } catch (error) {
     console.error('Error:', error)
   } finally {
@@ -60,18 +60,18 @@ async function vote(pollid: string, optionid: string) {
 // Fetch the poll owners
 async function fetchPollOwners() {
   try {
-    const promises = polls.value.map(async (poll) => {
+    const promises = polls.value.map(async poll => {
       if (!pollOwners.value[poll.creatorUserID]) {
-        const url = `/users/${poll.creatorUserID}`;
-        const response = await defaultFetch(url, 'GET', getUserToken());
-        pollOwners.value[poll.creatorUserID] = await response;
+        const url = `/users/${poll.creatorUserID}`
+        const response = await defaultFetch(url, 'GET', getUserToken())
+        pollOwners.value[poll.creatorUserID] = await response
       }
-    });
+    })
 
     // Wait for all requests to complete
-    await Promise.all(promises);
+    await Promise.all(promises)
   } catch (error) {
-    console.error('Error fetching poll owners:', error);
+    console.error('Error fetching poll owners:', error)
   }
 }
 

@@ -25,7 +25,7 @@ interface VoteOption {
 const votes = ref<Vote[]>([])
 const polls = ref<Poll[]>([])
 const error = ref<string | null>(null)
-const voteQuestionsAnswers = ref<Record<string, string>>({});
+const voteQuestionsAnswers = ref<Record<string, string>>({})
 const loading = ref(true)
 
 async function fetchVotes() {
@@ -50,33 +50,35 @@ async function fetchPolls() {
   }
 }
 const updateVoteQuestionsAnswers = () => {
-  const result: Record<string, string> = {};
+  const result: Record<string, string> = {}
 
   votes.value.forEach(vote => {
     // Find the poll corresponding to the vote
-    const poll = polls.value.find(p => String(p.id) === vote.pollId);
+    const poll = polls.value.find(p => String(p.id) === vote.pollId)
     if (!poll) {
-      result["Unkown"] = "Unknown Poll";
-      return;
+      result['Unkown'] = 'Unknown Poll'
+      return
     }
     // Find the vote option corresponding to the vote
-    const voteOption = poll.options.find(option => option.id === vote.voteOptionId);
+    const voteOption = poll.options.find(
+      option => option.id === vote.voteOptionId,
+    )
     if (!voteOption) {
-      result["Unkown"] = "Unknown VoteOption";
-      return;
+      result['Unkown'] = 'Unknown VoteOption'
+      return
     }
     // If there is a poll and voteOption make a result
-    result[poll.question] = `${voteOption.caption}`;
-  });
+    result[poll.question] = `${voteOption.caption}`
+  })
 
-  voteQuestionsAnswers.value = result;
-};
+  voteQuestionsAnswers.value = result
+}
 
 // Watch for changes in `votes` and `polls`
-watch([votes, polls], updateVoteQuestionsAnswers, { immediate: true });
+watch([votes, polls], updateVoteQuestionsAnswers, { immediate: true })
 
-fetchPolls();
-fetchVotes();
+fetchPolls()
+fetchVotes()
 </script>
 
 <template>
