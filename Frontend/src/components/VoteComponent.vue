@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { defaultFetch } from '@/utils/defaultFetch'
-import { ref, computed } from 'vue'
+import { ref, watch } from 'vue'
 interface Vote {
-  pollid: number
+  pollId: string
   voteOptionId: number
 }
 
@@ -24,16 +24,17 @@ interface VoteOption {
 
 const votes = ref<Vote[]>([])
 const polls = ref<Poll[]>([])
+const error = ref<string | null>(null)
+const voteQuestionsAnswers = ref<Record<string, string>>({});
 const loading = ref(true)
 
 async function fetchVotes() {
   try {
     const response = await defaultFetch('/votes', 'GET')
     votes.value = await response
-    console.log('votes: ', votes)
   } catch (error) {
     console.error('Error:', error)
-    alert('An error occurred. Please try again.')
+    error.value = 'An error occurred. Please try again.'
   } finally {
     loading.value = false
   }
@@ -43,35 +44,39 @@ async function fetchPolls() {
   try {
     const response = await defaultFetch('/polls', 'GET')
     polls.value = await response
-    console.log('polls: ', votes)
   } catch (error) {
     console.error('Error:', error)
-    alert('An error occurred. Please try again.')
+    error.value = 'An error occurred. Please try again.'
   }
 }
+const updateVoteQuestionsAnswers = () => {
+  const result: Record<string, string> = {};
 
-const mappedVotes = computed(() => {
-  return votes.value.map(vote => {
+  votes.value.forEach(vote => {
     // Find the poll corresponding to the vote
-    const poll = polls.value.find(p => p.id === vote.pollid)
-
-    console.log(polls)
-
-    // Find the vote option corresponding to the vote
-    const voteOption = poll?.options.find(
-      option => option?.id === vote.voteOptionId,
-    )
-
-    return {
-      ...vote,
-      pollName: poll?.question || 'Unknown Poll',
-      voteOptionCaption: voteOption?.caption || 'Unknown Option',
+    const poll = polls.value.find(p => String(p.id) === vote.pollId);
+    if (!poll) {
+      result["Unkown"] = "Unknown Poll";
+      return;
     }
-  })
-})
+    // Find the vote option corresponding to the vote
+    const voteOption = poll.options.find(option => option.id === vote.voteOptionId);
+    if (!voteOption) {
+      result["Unkown"] = "Unknown VoteOption";
+      return;
+    }
+    // If there is a poll and voteOption make a result
+    result[poll.question] = `${voteOption.caption}`;
+  });
 
-fetchPolls()
-fetchVotes()
+  voteQuestionsAnswers.value = result;
+};
+
+// Watch for changes in `votes` and `polls`
+watch([votes, polls], updateVoteQuestionsAnswers, { immediate: true });
+
+fetchPolls();
+fetchVotes();
 </script>
 
 <template>
@@ -82,9 +87,10 @@ fetchVotes()
         <h2>Vote</h2>
         <p v-if="loading">Loading users...</p>
         <ul v-else>
-          <li v-for="vote in mappedVotes" :key="vote.pollName">
-            Poll: {{ vote.pollName }} | Answer: {{ vote.voteOptionCaption }}
+          <li v-for="(answer, pollId) in voteQuestionsAnswers" :key="pollId">
+            Poll: {{ pollId }} | Answer: {{ answer }}
           </li>
+          <p v-if="error">{{ error }}</p>
         </ul>
       </div>
     </div>
