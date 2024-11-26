@@ -55,6 +55,8 @@ const mappedVotes = computed(() => {
     // Find the poll corresponding to the vote
     const poll = polls.value.find(p => p.id === vote.pollid)
 
+    console.log(polls)
+
     // Find the vote option corresponding to the vote
     const voteOption = poll?.options.find(
       option => option?.id === vote.voteOptionId,
