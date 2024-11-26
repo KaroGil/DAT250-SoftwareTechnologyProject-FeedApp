@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -50,6 +52,8 @@ public class UserController {
         try {
             String jwtToken = token.replace("Bearer ", "");
             logger.info("Removed Bearer from token: {}", jwtToken);
+            logger.info("Token as bytes: {}", Arrays.toString(jwtToken.getBytes()));
+
             UUID userId = JwtService.parseToken(jwtToken); // Extract userId from the token
             logger.info("Parsed userId: {}", userId);
             User currentUser = manager.getUser(userId);

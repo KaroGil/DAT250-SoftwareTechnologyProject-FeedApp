@@ -1,18 +1,25 @@
 package dat250.group22.FeedApp.util;
 
+import dat250.group22.FeedApp.controller.UserController;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 @Service
 public class JwtService {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private static final String SECRET_KEY = "Fs092ltGlTwyWyMtHqInF04xHt7zAh1qSmsW/nWeyFY="; // Generated with openssl
 
     public static UUID parseToken(String jwtToken) {
+        logger.info("Token as bytes: {} in jwtService", Arrays.toString(jwtToken.getBytes()));
+
         try {
             // Parse the token and extract claims
             Claims claims = Jwts.parserBuilder()
