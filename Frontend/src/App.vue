@@ -8,7 +8,7 @@ import SeePolls from '@/components/SeePolls.vue'
 import { deleteUserToken, getUserToken } from '@/utils/sessionStorageUtil'
 import CreateUser from '@/components/CreateUser.vue'
 
-const currentView = ref('login') // login as default to make sure the user logs in
+const currentView = ref('createUser') // login as default to make sure the user logs in
 const changeView = (view: string) => {
   currentView.value = view
 }

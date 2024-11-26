@@ -2,6 +2,7 @@
 // Get users
 import { ref } from 'vue'
 import { defaultFetch } from '@/utils/defaultFetch'
+import {getUserToken} from "@/utils/sessionStorageUtil";
 
 interface User {
   id: number
@@ -9,25 +10,34 @@ interface User {
   email: string
 }
 
-const users = ref<User[]>([])
+const user = ref<User | null>(null)
 const loading = ref(true)
+const error = ref<string | null>(null)
 
 // Fetch all users
-async function fetchUsers() {
+async function fetchCurrentUser() {
+  const token = getUserToken();
+
+  if(!token){
+    error.value = "No user is logged in."
+    loading.value = false
+    return
+  }
+
   try {
-    const response = await defaultFetch('/users', 'GET')
-    users.value = await response
-    console.log('users: ', users)
+    const response = await defaultFetch('/users/me', 'GET', token)
+    user.value = await response
+    console.log('users: ', user)
   } catch (error) {
     console.error('Error:', error)
-    alert('An error occurred. Please try again.')
+    error.value = "An error occurred. Please try again."
   } finally {
     loading.value = false
   }
 }
 
 // Call the fetchUsers function when the component is mounted
-fetchUsers()
+fetchCurrentUser()
 </script>
 
 <template>
@@ -37,9 +47,12 @@ fetchUsers()
       <div class="modal">
         <h2>All users</h2>
         <p v-if="loading">Loading users...</p>
-        <ul v-else v-for="user in users" :key="user.id">
-          <li>{{ user.name }} ({{ user.email }})</li>
-        </ul>
+        <p v-if="error">{{ error }}</p>
+        <div v-if="!loading && !error && user">
+           <p><strong>Name:</strong> {{ user.name }}</p>
+           <p><strong>Email:</strong> {{ user.email }}</p>
+        </div>
+        <p v-if="!loading && !error && !user">No user data found.</p>
       </div>
     </div>
   </main>

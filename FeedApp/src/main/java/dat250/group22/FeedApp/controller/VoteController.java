@@ -3,6 +3,8 @@ package dat250.group22.FeedApp.controller;
 
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.Vote;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +22,15 @@ public class VoteController {
 
     private final DomainManager manager;
 
+    private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
+
     @Autowired
     public VoteController(DomainManager manager) { this.manager = manager; }
 
     @PostMapping
     public ResponseEntity<String> createOrUpdateVote(@RequestBody Vote vote) {
         Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPollId());
-
+        logger.info("existing vote:  {}", existingVote.toString());
         if (existingVote != null){
             try{
                 existingVote.setPublishAt(Instant.now());
