@@ -21,6 +21,7 @@ interface User {
 }
 
 interface VoteOption {
+  id: number
   caption: string
   presentationOrder: number
 }
@@ -44,7 +45,7 @@ async function fetchPolls() {
   }
 }
 
-async function vote(pollid: string, optionid: string) {
+async function vote(pollid: string, optionid: number) {
   const body = {
     voteOptionId: optionid,
     pollId: pollid,

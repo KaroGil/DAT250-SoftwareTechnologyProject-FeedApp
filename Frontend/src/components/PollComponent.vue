@@ -23,6 +23,7 @@ const createPoll = async () => {
   try {
     const response = defaultFetch('/polls', 'POST', getUserToken(), body)
     console.log(response)
+    location.reload()
   } catch (error) {
     console.error('Error creating poll:', error)
   }

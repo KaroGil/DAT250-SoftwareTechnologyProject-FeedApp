@@ -24,7 +24,7 @@ interface VoteOption {
 
 const votes = ref<Vote[]>([])
 const polls = ref<Poll[]>([])
-const error = ref<string | null>(null)
+const errorMsg = ref<string | null>(null)
 const voteQuestionsAnswers = ref<Record<string, string>>({})
 const loading = ref(true)
 
@@ -34,7 +34,7 @@ async function fetchVotes() {
     votes.value = await response
   } catch (error) {
     console.error('Error:', error)
-    error.value = 'An error occurred. Please try again.'
+    errorMsg.value = 'An error occurred. Please try again.'
   } finally {
     loading.value = false
   }
@@ -46,7 +46,7 @@ async function fetchPolls() {
     polls.value = await response
   } catch (error) {
     console.error('Error:', error)
-    error.value = 'An error occurred. Please try again.'
+    errorMsg.value = 'An error occurred. Please try again.'
   }
 }
 const updateVoteQuestionsAnswers = () => {
@@ -92,7 +92,7 @@ fetchVotes()
           <li v-for="(answer, pollId) in voteQuestionsAnswers" :key="pollId">
             Poll: {{ pollId }} | Answer: {{ answer }}
           </li>
-          <p v-if="error">{{ error }}</p>
+          <p v-if="errorMsg">{{ errorMsg }}</p>
         </ul>
       </div>
     </div>

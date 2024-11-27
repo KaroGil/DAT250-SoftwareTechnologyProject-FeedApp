@@ -12,14 +12,14 @@ interface User {
 
 const user = ref<User | null>(null)
 const loading = ref(true)
-const error = ref<string | null>(null)
+const errorMsg = ref<string | null>(null)
 
 // Fetch all users
 async function fetchCurrentUser() {
   const token = getUserToken()
 
   if (!token) {
-    error.value = 'No user is logged in.'
+    errorMsg.value = 'No user is logged in.'
     loading.value = false
     return
   }
@@ -30,7 +30,7 @@ async function fetchCurrentUser() {
     console.log('users: ', user)
   } catch (error) {
     console.error('Error:', error)
-    error.value = 'An error occurred. Please try again.'
+    errorMsg.value = 'An error occurred. Please try again.'
   } finally {
     loading.value = false
   }
@@ -47,12 +47,12 @@ fetchCurrentUser()
       <div class="modal">
         <h2>Your profile</h2>
         <p v-if="loading">Loading users...</p>
-        <p v-if="error">{{ error }}</p>
-        <div v-if="!loading && !error && user">
+        <p v-if="errorMsg">{{ errorMsg }}</p>
+        <div v-if="!loading && !errorMsg && user">
           <p><strong>Name:</strong> {{ user.name }}</p>
           <p><strong>Email:</strong> {{ user.email }}</p>
         </div>
-        <p v-if="!loading && !error && !user">No user data found.</p>
+        <p v-if="!loading && !errorMsg && !user">No user data found.</p>
       </div>
     </div>
   </main>
