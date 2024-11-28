@@ -28,10 +28,10 @@ public class JwtService {
                     .parseClaimsJws(jwtToken)
                     .getBody();
 
-            // Extract the userId field (assume it's stored as a claim)
+            // Extract the userId field
             String userIdStr = claims.get("userId", String.class);
 
-            // Convert to UUID and return
+            // Convert to UUID
             return UUID.fromString(userIdStr);
 
         } catch (SignatureException e) {
