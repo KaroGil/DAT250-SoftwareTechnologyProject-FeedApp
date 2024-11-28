@@ -119,6 +119,8 @@ public class DomainManager {
         for (Vote vote : voteRepository.findAll()) {
             if (vote.getVotedBy().equals(votedBy) && vote.getPollId().equals(pollID)) {
                 return vote;
+            }else {
+
             }
         }
         logger.warn("Vote with user id {} and poll id {} not found.", votedBy, pollID);

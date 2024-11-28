@@ -4,6 +4,7 @@ package dat250.group22.FeedApp.controller;
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.Poll;
 import dat250.group22.FeedApp.util.JWTUtil;
+import dat250.group22.FeedApp.util.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,13 +30,12 @@ public class PollController {
     @PostMapping
     public ResponseEntity<String> createPoll( @RequestHeader("Authorization") String token, @RequestBody Poll poll) {
         try {
-            /*logger.info("Received Authorization header: {}", token);
+            logger.info("Received Authorization header: {}", token);
             String jwt = token.replace("Bearer ", "").trim();
             logger.info("JWT extracted: {}", jwt);
-            JWTUtil.testJWT();
-            UUID userId = UUID.fromString(JWTUtil.getUser(jwt));
+            UUID userId = JwtService.parseToken(jwt);
             logger.info("UserId from token: {}", userId);
-            poll.setCreatorUserID(userId);*/
+            poll.setCreatorUserID(userId);
 
             poll.setPublishedAt(Instant.now());
             manager.addPoll(poll);

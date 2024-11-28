@@ -9,7 +9,7 @@ export const defaultFetch = async (
     method: method,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token?.trim()}`,
+      Authorization: `Bearer ${token?.replace(/^"|"$/g, '').trim()}`,
     },
     body: JSON.stringify(body),
   })

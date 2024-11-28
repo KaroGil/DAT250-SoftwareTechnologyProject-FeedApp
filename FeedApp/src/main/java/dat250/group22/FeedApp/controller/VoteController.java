@@ -3,6 +3,9 @@ package dat250.group22.FeedApp.controller;
 
 import dat250.group22.FeedApp.manager.DomainManager;
 import dat250.group22.FeedApp.model.Vote;
+import dat250.group22.FeedApp.util.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +23,22 @@ public class VoteController {
 
     private final DomainManager manager;
 
+    private static final Logger logger = LoggerFactory.getLogger(DomainManager.class);
+
     @Autowired
     public VoteController(DomainManager manager) { this.manager = manager; }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdateVote(@RequestBody Vote vote) {
-        Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPollId());
+    public ResponseEntity<String> createOrUpdateVote(@RequestHeader("Authorization") String token, @RequestBody Vote vote) {
+        logger.info("Received Authorization header: {}", token);
+        String jwt = token.replace("Bearer ", "").trim();
+        logger.info("JWT extracted: {}", jwt);
+        UUID userId = JwtService.parseToken(jwt);
+        logger.info("UserId from token: {}", userId);
+        vote.setVotedBy(userId);
 
+        logger.info("Creating or updating vote: {}", vote);
+        Vote existingVote = manager.findVoteByUserAndPoll(vote.getVotedBy(), vote.getPollId());
         if (existingVote != null){
             try{
                 existingVote.setPublishAt(Instant.now());
