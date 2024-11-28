@@ -59,7 +59,7 @@ async function vote(pollid: string, optionid: number) {
 }
 
 // Lets a user delete their own polls
-async function deleteOwnPoll(id: number) {
+async function deleteOwnPoll(id: string) {
   try {
     const url = `/polls/${id}`
     await defaultFetch(url, 'DELETE', getUserToken())
