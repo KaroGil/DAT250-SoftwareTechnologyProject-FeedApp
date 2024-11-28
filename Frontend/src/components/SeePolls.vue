@@ -58,6 +58,16 @@ async function vote(pollid: string, optionid: number) {
   }
 }
 
+// Lets a user delete their own polls
+async function deleteOwnPoll(id: number){
+  try {
+    const url = `/polls/${id}`
+    await defaultFetch(url, 'DELETE', getUserToken())
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
 // Fetch the poll owners
 async function fetchPollOwners() {
   try {
@@ -90,6 +100,7 @@ fetchPolls()
           <li>
             {{ poll.question }} created by:
             {{ pollOwners[poll.creatorUserID]?.email || 'Unknown' }}
+            <p @click="deleteOwnPoll(poll.id)">X</p>
           </li>
           <div v-for="option in poll.options" :key="option.id">
             <button @click="vote(poll.id, option.id)">
@@ -108,5 +119,9 @@ fetchPolls()
   padding: 20px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+p {
+  cursor: pointer;
+  color: red;
 }
 </style>
