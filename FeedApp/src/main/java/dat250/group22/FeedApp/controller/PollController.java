@@ -51,10 +51,21 @@ public class PollController {
     public Poll getPoll(@PathVariable UUID pollId) { return manager.getPoll(pollId); }
 
     @DeleteMapping
-    public void deleteAllPolls() { manager.deleteAllPolls(); }
+    public void deleteAllPolls() {
+        manager.deleteAllPolls();
+    }
 
     @DeleteMapping("/{pollId}")
-    public void deletePoll(@PathVariable UUID pollId) { manager.deletePoll(pollId); }
+    public void deletePoll(@RequestHeader("Authorization") String token, @PathVariable UUID pollId) {
+        String jwt = token.replace("Bearer ", "").trim();
+        UUID userId = JwtService.parseToken(jwt);
+        logger.info("UserId from token: {}", userId);
+        logger.info("PollId from token: {}", pollId);
+        logger.info("UserId equals to pollcreatorid: {}", userId == getPoll(pollId).getCreatorUserID());
+        if(userId.equals(getPoll(pollId).getCreatorUserID())){
+            manager.deletePoll(pollId);
+        }
+    }
 
     @PutMapping("/{pollId}")
     public void updatePoll(@PathVariable UUID pollId, @RequestBody Poll poll) { manager.updatePoll(pollId, poll); }
